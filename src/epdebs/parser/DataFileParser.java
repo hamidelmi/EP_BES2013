@@ -11,11 +11,11 @@ public class DataFileParser {
 	String eventLine = null;
 	StringTokenizer tokenizer = null;
 	Event currentEvent = null;
+
 	public void readDataFile() {
 		try {
-
 			br = new BufferedReader(new FileReader(Main.dataFilePath));
-	//	System.out.println("File read successfully !!!!");
+			// System.out.println("File read successfully !!!!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,12 +24,12 @@ public class DataFileParser {
 	public Event createNewEvent() {
 		try {
 			eventLine = br.readLine();
-		//	System.out.println("Readline successfull ");
+			// System.out.println("Readline successfull ");
 			System.out.println(eventLine);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(eventLine == null) 
+		if (eventLine == null)
 			return null;
 		tokenizer = new StringTokenizer(eventLine, ",");
 		String sid = tokenizer.nextToken();
@@ -45,8 +45,9 @@ public class DataFileParser {
 		int ax = Integer.parseInt(tokenizer.nextToken());
 		int ay = Integer.parseInt(tokenizer.nextToken());
 		int az = Integer.parseInt(tokenizer.nextToken());
-		
-		 currentEvent = new Event(sid, ts, x, y, z, abs_v, vx, vy, vz, abs_a, ax, ay, az);
+
+		currentEvent = new Event(sid, ts, x, y, z, abs_v, vx, vy, vz, abs_a,
+				ax, ay, az);
 		return currentEvent;
 
 	}
