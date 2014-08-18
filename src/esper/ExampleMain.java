@@ -2,10 +2,14 @@ package esper;
 
 import com.espertech.esper.client.*;
 
-import debs13.challenge.analysis.AggIntensityStmt;
+import epdebs.parser.DataFileParser;
+import epdebs.parser.Event;
 
 import java.util.Random;
 import java.util.Date;
+
+import queries.IntensityListener;
+import queries.IntensityStatement;
 
 public class ExampleMain {
 
@@ -69,18 +73,29 @@ public class ExampleMain {
 		EPRuntime cepRT = cep.getEPRuntime();
 
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		
-		AggIntensityStmt aggInetsityEventStmt = new AggIntensityStmt(epService.getEPAdministrator());
-		
-//		EPStatement cepStatement = cepAdm.createEPL("select * from "
-//				+ "StockTick(symbol='AAPL').win:length(2) "
-//				+ "having avg(price) > 6.0");
-//
-//		cepStatement.addListener(new CEPListener());
-//
-//		// We generate a few ticks...
-//		for (int i = 0; i < 5; i++) {
-//			GenerateRandomTick(cepRT);
-//		}
+
+		IntensityStatement aggInetsityEventStmt = new IntensityStatement(
+				cepAdm, new IntensityListener());
+
+		DataFileParser parser = new DataFileParser();
+
+		Event curPosEvent = parser.createNewEvent();
+
+		while (curPosEvent != null) {
+			cep.getEPRuntime().sendEvent(curPosEvent);
+
+			curPosEvent = parser.createNewEvent();
+		}
+
+		// EPStatement cepStatement = cepAdm.createEPL("select * from "
+		// + "StockTick(symbol='AAPL').win:length(2) "
+		// + "having avg(price) > 6.0");
+		//
+		// cepStatement.addListener(new CEPListener());
+		//
+		// // We generate a few ticks...
+		// for (int i = 0; i < 5; i++) {
+		// GenerateRandomTick(cepRT);
+		// }
 	}
 }
