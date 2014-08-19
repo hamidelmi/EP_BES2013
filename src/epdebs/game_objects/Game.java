@@ -6,6 +6,7 @@ import java.util.List;
 public class Game {
 	protected Team teamA, teamB;
 	protected Referee referee;
+	protected Ball ball;
 
 	public Game() {
 		List<Player> players = new ArrayList<Player>();
@@ -34,5 +35,17 @@ public class Game {
 		teamB = new Team(players);
 
 		referee = new Referee(105, 106);
+		
+		ball = new Ball(new int [] {4, 8, 10, 12}, "ball");
+		
+		
+	}
+	
+	public String GetTeamName(String playerName)
+	{
+		if(teamA.players.contains(playerName))
+			return "teamA";
+		else
+			return "teamB";
 	}
 }
