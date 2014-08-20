@@ -13,7 +13,7 @@ public class Main {
 		dataFilePath = System.getenv("dataFilePath");
 		metadataFilePath = System.getenv("metadataFilePath");
 		DataFileParser df = new DataFileParser();
-		df.readDataFile();
+		
 		Event ev = null;
 		do {
 			ev = df.createNewEvent();

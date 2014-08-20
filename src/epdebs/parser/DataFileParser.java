@@ -12,10 +12,10 @@ public class DataFileParser {
 	StringTokenizer tokenizer = null;
 	Event currentEvent = null;
 
-	public void readDataFile() {
+	public DataFileParser() {
 		try {
 			br = new BufferedReader(new FileReader(Main.dataFilePath));
-			// System.out.println("File read successfully !!!!");
+			System.out.println("File read successfully !!!!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
