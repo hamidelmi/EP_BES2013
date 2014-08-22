@@ -14,8 +14,8 @@ public class DataFileParser {
 
 	public DataFileParser() {
 		try {
-			br = new BufferedReader(new FileReader(Main.dataFilePath));
-			System.out.println("File read successfully !!!!");
+			br = new BufferedReader(new FileReader(Settings.dataFilePath));
+			//System.out.println("File read successfully !!!!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
