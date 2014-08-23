@@ -8,14 +8,14 @@ public class Main {
 		// TODO Auto-generated method stub
 		//dataFilePath = System.getenv("dataFilePath");
 		//metadataFilePath = System.getenv("metadataFilePath");
-		DataFileParser df = new DataFileParser();
+		DataFileParser dataFileParser = new DataFileParser();
 		
-		Event ev = null;
+		Event event = null;
 		do {
-			ev = df.createNewEvent();
+			event = dataFileParser.createNewEvent();
 			
 			//TODO: query
-		   } while (ev != null);
+		   } while (event != null);
 
 	}
 

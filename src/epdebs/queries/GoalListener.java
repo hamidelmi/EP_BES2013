@@ -10,15 +10,17 @@ public class GoalListener implements UpdateListener
 	  {
 	    public void update(EventBean[] newEventBean, EventBean[] oldEventBean)
 	    {
+	    	System.out.println("Goal update started...");
 	      if (newEventBean == null)
 	      {
 	        return;
 	      }
-	      for (EventBean theEvent : newEventBean) {
-	        System.out.println("Goal: " + theEvent.getUnderlying());
+	      for (EventBean eventBean : newEventBean) 
+	      {
+	        System.out.println("Goal: " + eventBean.getUnderlying());
 	      }
 	    }
 	    
-	    private static final Log log = LogFactory.getLog(GoalListener.class);
+	   // private static final Log log = LogFactory.getLog(GoalListener.class);
 
 }

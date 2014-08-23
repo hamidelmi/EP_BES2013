@@ -14,11 +14,12 @@ public class GoalStatement
 	  
 	  public GoalStatement(EPAdministrator epAdministrator)
 	  {
-	    String goalQuery = "insert into GoalEvent "
+		  System.out.println("Goal stmt");
+	    String query = "insert into GoalEvent "
 	    		    + "select * from pattern[GoalEvent= BallContactEvent(goal = 1) "
 	    		    + "->ballPositionEvent=RelevantPositionEvent(entType = 2) "
 	    		    + "until (BallContactEvent or OutOfPlayEvent)] ";
 	    
-	    this.epsStatement = epAdministrator.createEPL(goalQuery);
+	    this.epsStatement = epAdministrator.createEPL(query);
 	  }
 	}

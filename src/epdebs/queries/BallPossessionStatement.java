@@ -6,9 +6,9 @@ import com.espertech.esper.client.UpdateListener;
 
 public class BallPossessionStatement {
 
-	private EPStatement statement;
+	private EPStatement epStatement;
 	
-	public BallPossessionStatement(EPAdministrator admin, UpdateListener listener) {
+	public BallPossessionStatement(EPAdministrator epAdministrator, UpdateListener listener) {
 		String query = "insert into BallPossessionEvent"
 						+ "select EarlierEvent.player_ts as ts,"
 						+ "CurrentEvent.palyerName as palyerName,"
@@ -19,8 +19,8 @@ public class BallPossessionStatement {
 						+ "EarlierEvent = ContactEvent( CurrentEvent.palyerName <> palyerName)) ]";
 		
     	
-		this.statement = admin.createEPL(query);
-		this.statement.addListener(listener);
+		this.epStatement = epAdministrator.createEPL(query);
+		this.epStatement.addListener(listener);
 		
 	}
 	

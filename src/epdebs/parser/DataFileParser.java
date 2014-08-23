@@ -31,7 +31,7 @@ public class DataFileParser {
 		{
 			eventLine = br.readLine();
 			// System.out.println("Readline successfull ");
-			System.out.println(eventLine);
+			//System.out.println(eventLine);
 		}
 		catch (IOException e) 
 		{
