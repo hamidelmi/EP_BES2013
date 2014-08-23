@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+	private static Game instance;
 	protected Team teamA, teamB;
 	protected Referee referee;
 	protected Ball ball;
 
-	public Game() {
+	public static Game Singleton() {
+		if (instance == null)
+			instance = new Game();
+		return instance;
+	}
+
+	protected Game() {
 		List<Player> players = new ArrayList<Player>();
 		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
@@ -35,17 +42,35 @@ public class Game {
 		teamB = new Team(players);
 
 		referee = new Referee(105, 106);
-		
-		ball = new Ball(new int [] {4, 8, 10, 12}, "ball");
-		
-		
+
+		ball = new Ball(new int[] { 4, 8, 10, 12 }, "ball");
 	}
-	
-	public String GetTeamName(String playerName)
-	{
-		if(teamA.players.contains(playerName))
+
+	private int indexOfPlayer(String playerName, Team team) {
+		for (int i = 0; i < team.players.size(); i++)
+			if (team.players.get(i).name.equalsIgnoreCase(playerName))
+				return i;
+		return -1;
+	}
+
+	public String GetTeamName(String playerName) {
+		if (indexOfPlayer(playerName, teamA) >= 0)
 			return "teamA";
-		else
+		else if (indexOfPlayer(playerName, teamB) >= 0)
 			return "teamB";
+		else
+			return null;
+	}
+
+	public Player getPlayer(String playerName) {
+		int i = indexOfPlayer(playerName, teamA);
+		if (i >= 0)
+			return teamA.players.get(i);
+		else {
+			i = indexOfPlayer(playerName, teamB);
+			if (i >= 0)
+				return teamB.players.get(i);
+		}
+		return null;
 	}
 }

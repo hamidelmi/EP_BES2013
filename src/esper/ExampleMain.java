@@ -2,6 +2,7 @@ package esper;
 
 import com.espertech.esper.client.*;
 
+import epdebs.game_objects.Game;
 import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Main;
@@ -32,10 +33,11 @@ public class ExampleMain {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		IntensityStatement aggInetsityEventStmt = new IntensityStatement(
-				cepAdm, new IntensityListener());
+		IntensityStatement inetsityEventStmt = new IntensityStatement(cepAdm,
+				new IntensityListener());
 
 		DataFileParser parser = new DataFileParser();
+		Game game = Game.Singleton();
 
 		Event curPosEvent = parser.createNewEvent();
 
