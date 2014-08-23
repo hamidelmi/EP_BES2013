@@ -6,12 +6,13 @@ import epdebs.game_objects.Game;
 import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Main;
+import epdebs.parser.Settings;
+import epdebs.queries.IntensityListener;
+import epdebs.queries.IntensityStatement;
 
 import java.util.Random;
 import java.util.Date;
 
-import queries.IntensityListener;
-import queries.IntensityStatement;
 
 public class ExampleMain {
 
@@ -23,8 +24,8 @@ public class ExampleMain {
 	}
 
 	public static void main(String[] args) {
-		Main.dataFilePath = System.getenv("dataFilePath");
-		Main.metadataFilePath = System.getenv("metadataFilePath");
+		Settings.dataFilePath = System.getenv("dataFilePath");
+		Settings.metadataFilePath = System.getenv("metadataFilePath");
 
 		// The Configuration is meant only as an initialization-time object.
 		Configuration cepConfig = new Configuration();
