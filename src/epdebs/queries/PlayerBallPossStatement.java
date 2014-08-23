@@ -4,11 +4,11 @@ import com.espertech.esper.client.EPAdministrator;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.UpdateListener;
 
-public class PlayerBallPossStmt {
+public class PlayerBallPossStatement {
 
 	private EPStatement statement;
 	
-	public PlayerBallPossStmt(EPAdministrator admin, UpdateListener listener) {
+	public PlayerBallPossStatement(EPAdministrator admin, UpdateListener listener) {
 		String query = "insert into PlayerBallPossEvent"
 						+ "select max(ts) as ts,"
 						+ "palyerName,"
