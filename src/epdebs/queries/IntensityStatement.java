@@ -8,6 +8,7 @@ public class IntensityStatement {
 	private EPStatement statement;
 
 	public IntensityStatement(EPAdministrator admin, UpdateListener listener) {
+
 		// String query = "insert into AggIntPlayerEvent_"
 		// + 5
 		// + " "
@@ -45,16 +46,14 @@ public class IntensityStatement {
 		// + " from CurrentIntensityEvent.win:time(300000 sec) as curIntEv "
 		// + "group by curIntEv.player_id";
 
-		String query = "INSERT INTO InstantIntensity Select sid, ts, abs_v, "
-				+ "CASE WHEN abs_v < " + SpeedToV(1) + " THEN 0 "
-				+ "WHEN abs_v < " + SpeedToV(11) + " THEN 1" + "WHEN abs_v < "
-				+ SpeedToV(13) + " THEN 2" + "WHEN abs_v < " + SpeedToV(17)
-				+ " THEN 3" + "WHEN abs_v < " + SpeedToV(24) + " THEN 4"
-				+ "ELSE 5" + "END as  InstantIntensity " + "FROM Event";
+		String query = "select sid, ts, abs_v, " + "CASE WHEN abs_v < " + SpeedToV(1)
+				+ " THEN 0 " + "WHEN abs_v < " + SpeedToV(11) + " THEN 1"
+				+ "WHEN abs_v < " + SpeedToV(13) + " THEN 2" + "WHEN abs_v < "
+				+ SpeedToV(17) + " THEN 3" + "WHEN abs_v < " + SpeedToV(24)
+				+ " THEN 4" + "ELSE 5" + "END as  InstantIntensity " + "FROM Event";
 
 		this.statement = admin.createEPL(query);
-		if (listener != null)
-			this.statement.addListener(listener);
+		this.statement.addListener(listener);
 	}
 
 	private int SpeedToV(int speed) {
