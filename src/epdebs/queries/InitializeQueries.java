@@ -20,7 +20,7 @@ public class InitializeQueries {
 
 	public void run() {
 		
-		new Game();
+		//new Game();
 		Configuration configuration = new Configuration();
 //		configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
 		

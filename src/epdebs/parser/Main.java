@@ -49,7 +49,7 @@ public class Main {
 		ContactStatement contactStatement = new ContactStatement(epServiceProvider.getEPAdministrator(), new ContactListener());
 		PauseIntervalStatement pauseIntervalStatement = new PauseIntervalStatement(epServiceProvider.getEPAdministrator(), new PauseIntervalListener());
 		//BallPossessionStatement ballPossessionStatement = new BallPossessionStatement(epServiceProvider.getEPAdministrator(), new BallPossessionListener());
-		GoalStatement goalStatement = new GoalStatement(epServiceProvider.getEPAdministrator(), new GoalListener());
+		//GoalStatement goalStatement = new GoalStatement(epServiceProvider.getEPAdministrator(), new GoalListener());
 		
 		DataFileParser parser = new DataFileParser();
 
