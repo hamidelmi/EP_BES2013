@@ -7,7 +7,6 @@ import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Main;
 import epdebs.parser.Settings;
-import epdebs.queries.AccumulativeIntensityStatement;
 import epdebs.queries.IntensityListener;
 import epdebs.queries.IntensityStatement;
 
@@ -24,8 +23,8 @@ public class ExampleMain {
 	}
 
 	public static void main(String[] args) {
-		Settings.dataFilePath = System.getenv("dataFilePath");
-		Settings.metadataFilePath = System.getenv("metadataFilePath");
+		Settings.dataFilePath = Settings.dataFilePath;
+		Settings.metadataFilePath = Settings.metadataFilePath;
 
 		// The Configuration is meant only as an initialization-time object.
 		Configuration cepConfig = new Configuration();
@@ -34,11 +33,8 @@ public class ExampleMain {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		IntensityStatement intensityStatement = new IntensityStatement(cepAdm,
-				null);
-
-		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
-				cepAdm, new IntensityListener());
+		IntensityStatement inetsityEventStmt = new IntensityStatement(cepAdm,
+				new IntensityListener());
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();
