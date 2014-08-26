@@ -3,26 +3,15 @@ package epdebs.game_objects;
 
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 //import java.util.HashMap;
-=======
-import java.util.HashMap;
->>>>>>> origin/master
 import java.util.List;
 
 public class Game {
 	private static Game instance;
-<<<<<<< HEAD
 	protected static Team teamA, teamB;
 	protected static Referee referee;
 	protected static Ball ball;
 //	protected static HashMap<String, SensoredEntity> IdToEntity = null;
-=======
-	protected Team teamA, teamB;
-	protected Referee referee;
-	protected Ball ball;
-	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
->>>>>>> origin/master
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -30,12 +19,7 @@ public class Game {
 		return instance;
 	}
 
-<<<<<<< HEAD
 	public Game() {
-=======
-	protected Game() {
-		playersAccumulativeIntensity = new HashMap<String, AccumulativeIntensity>();
->>>>>>> origin/master
 		List<Player> players = new ArrayList<Player>();
 		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
@@ -46,7 +30,6 @@ public class Game {
 		players.add(new Player(57, 58, "Erik Engelhardt"));
 		players.add(new Player(59, 28, "Sandro Schneider"));
 
-		fillAccumulativeIntensity(players);
 		teamA = new Team(players);
 
 		players = new ArrayList<Player>();
@@ -60,7 +43,6 @@ public class Game {
 		players.add(new Player(73, 74, "Leon Heinze"));
 		players.add(new Player(75, 44, "Leo Langhans"));
 
-		fillAccumulativeIntensity(players);
 		teamB = new Team(players);
 
 		referee = new Referee(105, 106);
@@ -68,19 +50,6 @@ public class Game {
 		ball = new Ball(new int[] { 4, 8, 10, 12 }, "ball");
 	}
 
-	private void fillAccumulativeIntensity(List<Player> players) {
-		for (Player player : players) {
-			playersAccumulativeIntensity.put(player.name,
-					new AccumulativeIntensity());
-		}
-	}
-
-	public AccumulativeIntensity getIntensity(String playerName){
-		if (playersAccumulativeIntensity.containsKey(playerName))
-			return playersAccumulativeIntensity.get(playerName);
-		return null;
-	}
-	
 	private int indexOfPlayer(String playerName, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).name.equalsIgnoreCase(playerName))
