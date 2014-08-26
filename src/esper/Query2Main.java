@@ -13,6 +13,7 @@ import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Settings;
 import epdebs.queries.AccumulativeIntensityStatement;
+import epdebs.queries.EchoListener;
 import epdebs.queries.IntensityListener;
 import epdebs.queries.IntensityStatement;
 
@@ -40,7 +41,7 @@ public class Query2Main {
 				null);
 
 		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
-				cepAdm, new IntensityListener());
+				cepAdm, new EchoListener());
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();

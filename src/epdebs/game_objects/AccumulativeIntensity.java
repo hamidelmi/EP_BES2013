@@ -15,13 +15,11 @@ public class AccumulativeIntensity {
 			current = new AccumulativeIntensity();
 
 		if (current.active) {
-
 			current.active = current.intensity == instanceIntensity;
 			current.ts = ts;
 			current.v = abs_v;
 			current.intensity = instanceIntensity;
 		}
-
 		return current;
 	}
 }

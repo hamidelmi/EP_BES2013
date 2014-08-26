@@ -9,9 +9,10 @@ public class AccumulativeIntensityStatement {
 
 	public AccumulativeIntensityStatement(EPAdministrator admin,
 			UpdateListener listener) {
-		String query = "insert into CurrentIntensityEvent "
-				+ "select  curIntMessage.* "
-				+ "from InstantIntensity intEvent method:debs13.challenge.game.Game.GetCurrentIntensityMessage(intEvent.name,intEvent.ts,intEvent.intensity,intEvent.abs_v) curIntMessage where not curIntMessage.player_id = 'ignore' ";
+		String query = // "insert into CurrentIntensityEvent "
+		"select  * " + "from InstantIntensityEvent iie";
+		// method:epdebs.game_objects.AccumulativeIntensity.Instantiate(iie.name,iie.ts,iie.abs_v,iie.intensity)
+		// accI
 		this.statement = admin.createEPL(query);
 		if (listener != null)
 			this.statement.addListener(listener);
