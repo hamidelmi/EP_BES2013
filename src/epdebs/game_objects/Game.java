@@ -1,13 +1,17 @@
 package epdebs.game_objects;
 
+
+
 import java.util.ArrayList;
+//import java.util.HashMap;
 import java.util.List;
 
 public class Game {
 	private static Game instance;
-	protected Team teamA, teamB;
-	protected Referee referee;
-	protected Ball ball;
+	protected static Team teamA, teamB;
+	protected static Referee referee;
+	protected static Ball ball;
+//	protected static HashMap<String, SensoredEntity> IdToEntity = null;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -15,7 +19,7 @@ public class Game {
 		return instance;
 	}
 
-	protected Game() {
+	public Game() {
 		List<Player> players = new ArrayList<Player>();
 		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
