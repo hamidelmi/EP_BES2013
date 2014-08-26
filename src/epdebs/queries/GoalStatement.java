@@ -6,21 +6,20 @@ import com.espertech.esper.client.UpdateListener;
 
 public class GoalStatement 
 {
-	  private EPStatement epStatement;
-	  
-	  public GoalStatement(EPAdministrator epAdministrator, UpdateListener listener)
+	  private EPStatement epsStatement;
+	  public void addListener(UpdateListener listener)
 	  {
-	    String query = "insert into ShotOnGoalEvent "
-	    		    + "select * from pattern[shotOnGoalEvent= BallContactEvent(shotongoal = 1) "
+	    this.epsStatement.addListener(listener);
+	  }
+	  
+	  public GoalStatement(EPAdministrator epAdministrator)
+	  {
+		  System.out.println("Goal stmt");
+	    String query = "insert into GoalEvent "
+	    		    + "select * from pattern[GoalEvent= BallContactEvent(goal = 1) "
 	    		    + "->ballPositionEvent=RelevantPositionEvent(entType = 2) "
-	    		    + "until (BallContactEvent or PauseIntervalEvent)] ";
+	    		    + "until (BallContactEvent or OutOfPlayEvent)] ";
 	    
-	    String stmt = "insert into ShotOnGoalEvent "
-	    		+ "select * from pattern[shotOnGoalEvent= BallContactEvent(shotongoal = 1) "
-	    		+ "->ballPositionEvent=RelevantPositionEvent(entType = 2) "
-	    		+ "until (BallContactEvent or OutOfPlayEvent)] ";
-	    
-	    this.epStatement = epAdministrator.createEPL(query);
-		this.epStatement.addListener(listener);
+	    this.epsStatement = epAdministrator.createEPL(query);
 	  }
 	}
