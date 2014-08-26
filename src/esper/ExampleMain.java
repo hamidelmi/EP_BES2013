@@ -13,7 +13,6 @@ import epdebs.queries.IntensityStatement;
 import java.util.Random;
 import java.util.Date;
 
-
 public class ExampleMain {
 
 	public static class CEPListener implements UpdateListener {
@@ -24,8 +23,8 @@ public class ExampleMain {
 	}
 
 	public static void main(String[] args) {
-		Settings.dataFilePath = System.getenv("dataFilePath");
-		Settings.metadataFilePath = System.getenv("metadataFilePath");
+		Settings.dataFilePath = Settings.dataFilePath;
+		Settings.metadataFilePath = Settings.metadataFilePath;
 
 		// The Configuration is meant only as an initialization-time object.
 		Configuration cepConfig = new Configuration();
