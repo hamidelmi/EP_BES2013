@@ -58,12 +58,19 @@ public class Game {
 		}
 	}
 
-	public AccumulativeIntensity getIntensity(String playerName){
-		if (playersAccumulativeIntensity.containsKey(playerName))
-			return playersAccumulativeIntensity.get(playerName);
+	public AccumulativeIntensity getIntensity(int sensorId) {
+		String playerName = null;
+		Player player = getPlayerBySensorId(sensorId);
+		if (player != null)
+			playerName = player.name;
+
+		if (playerName != null)
+			if (playersAccumulativeIntensity.containsKey(playerName))
+				return playersAccumulativeIntensity.get(playerName);
+
 		return null;
 	}
-	
+
 	private int indexOfPlayer(String playerName, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).name.equalsIgnoreCase(playerName))
@@ -80,7 +87,7 @@ public class Game {
 			return null;
 	}
 
-	public Player getPlayer(String playerName) {
+	public Player getPlayerByName(String playerName) {
 		int i = indexOfPlayer(playerName, teamA);
 		if (i >= 0)
 			return teamA.players.get(i);
@@ -89,6 +96,13 @@ public class Game {
 			if (i >= 0)
 				return teamB.players.get(i);
 		}
+		return null;
+	}
+
+	public Player getPlayerBySensorId(int sensorId) {
+		for (Player player : teamA.players)
+			if (player.hasSensorId(sensorId))
+				return player;
 		return null;
 	}
 }

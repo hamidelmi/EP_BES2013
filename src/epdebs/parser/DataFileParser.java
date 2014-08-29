@@ -12,35 +12,27 @@ public class DataFileParser {
 	StringTokenizer tokenizer = null;
 	Event currentEvent = null;
 
-	public DataFileParser() 
-	{
-		try
-		{
+	public DataFileParser() {
+		try {
 			br = new BufferedReader(new FileReader(Settings.dataFilePath));
 			System.out.println("File read successfully !!!!");
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Event createNewEvent() 
-	{
-		try 
-		{
+	public Event createNewEvent() {
+		try {
 			eventLine = br.readLine();
-			 System.out.println("Readline successfull ");
-			 System.out.println(eventLine);
-		}
-		catch (IOException e) 
-		{
+			System.out.println("Readline successfull ");
+			System.out.println(eventLine);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (eventLine == null)
 			return null;
 		tokenizer = new StringTokenizer(eventLine, ",");
-		String sid = tokenizer.nextToken();
+		int sid = Integer.parseInt(tokenizer.nextToken());
 		long ts = Long.parseLong(tokenizer.nextToken());
 		int x = Integer.parseInt(tokenizer.nextToken());
 		int y = Integer.parseInt(tokenizer.nextToken());
