@@ -7,8 +7,6 @@ import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Main;
 import epdebs.parser.Settings;
-import epdebs.queries.IntensityListener;
-import epdebs.queries.IntensityStatement;
 
 import java.util.Random;
 import java.util.Date;
@@ -34,8 +32,6 @@ public class ExampleMain {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		IntensityStatement inetsityEventStmt = new IntensityStatement(cepAdm,
-				new IntensityListener());
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();

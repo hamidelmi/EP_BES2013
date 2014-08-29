@@ -1,4 +1,5 @@
 package eplab.anfragen;
+
 /*
  * This class provides instance for eplab.bodenobjekte objects.
  * Also it holds all the utility functions needed in all queries 
@@ -65,15 +66,24 @@ public class Game {
 		}
 	}
 
-	public AccumulativeIntensity getIntensity(String playerName){
+	public AccumulativeIntensity getIntensity(int sensorId) {
+		String playerName = getPlayer(sensorId).name;
+
 		if (playersAccumulativeIntensity.containsKey(playerName))
 			return playersAccumulativeIntensity.get(playerName);
 		return null;
 	}
-	
+
 	private int indexOfPlayer(String playerName, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).name.equalsIgnoreCase(playerName))
+				return i;
+		return -1;
+	}
+
+	private int indexOfPlayer(int sensorId, Team team) {
+		for (int i = 0; i < team.players.size(); i++)
+			if (team.players.get(i).hasSensorId(sensorId))
 				return i;
 		return -1;
 	}
@@ -98,7 +108,19 @@ public class Game {
 		}
 		return null;
 	}
-	
+
+	public Player getPlayer(int sensorId) {
+		int i = indexOfPlayer(sensorId, teamA);
+		if (i >= 0)
+			return teamA.players.get(i);
+		else {
+			i = indexOfPlayer(sensorId, teamB);
+			if (i >= 0)
+				return teamB.players.get(i);
+		}
+		return null;
+	}
+
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
 	}

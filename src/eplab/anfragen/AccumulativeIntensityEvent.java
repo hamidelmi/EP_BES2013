@@ -1,4 +1,5 @@
-package epdebs.game_objects;
+package eplab.anfragen;
+
 
 public class AccumulativeIntensityEvent {
 	private long ts_start;

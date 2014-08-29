@@ -12,10 +12,9 @@ import epdebs.game_objects.Game;
 import epdebs.parser.DataFileParser;
 import epdebs.parser.Event;
 import epdebs.parser.Settings;
-import epdebs.queries.AccumulativeIntensityStatement;
-import epdebs.queries.EchoListener;
-import epdebs.queries.IntensityListener;
-import epdebs.queries.IntensityStatement;
+import eplab.anfragen.AccumulativeIntensityStatement;
+import eplab.anfragen.EchoListener;
+import eplab.anfragen.IntensityStatement;
 
 public class Query2Main {
 

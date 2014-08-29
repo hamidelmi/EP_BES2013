@@ -17,4 +17,10 @@ public class BaseObject {
 		return this.name;
 	}
 
+	public boolean hasSensorId(int id) {
+		for (int item : sensorId)
+			if (id == item)
+				return true;
+		return false;
+	}
 }

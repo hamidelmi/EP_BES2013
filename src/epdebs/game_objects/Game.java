@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import eplab.anfragen.AccumulativeIntensity;
+import eplab.bodenobjekte.Player;
+import eplab.bodenobjekte.Team;
+
 public class Game {
 	private static Game instance;
 	protected Team teamA, teamB;
@@ -20,7 +24,7 @@ public class Game {
 	protected Game() {
 		playersAccumulativeIntensity = new HashMap<String, AccumulativeIntensity>();
 		List<Player> players = new ArrayList<Player>();
-		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
+//		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
 		players.add(new Player(49, 88, "Niklas Waelzlein"));
 		players.add(new Player(19, 52, "Wili Sommer"));
@@ -34,7 +38,7 @@ public class Game {
 
 		players = new ArrayList<Player>();
 
-		players.add(new GoalKeeper(61, 62, 99, 100, "Leon Krapf"));
+//		players.add(new GoalKeeper(61, 62, 99, 100, "Leon Krapf"));
 		players.add(new Player(63, 64, "Kevin Baer"));
 		players.add(new Player(65, 66, "Luca Ziegler"));
 		players.add(new Player(67, 68, "Ben Mueller"));
@@ -51,6 +55,7 @@ public class Game {
 		ball = new Ball(new int[] { 4, 8, 10, 12 }, "ball");
 	}
 
+
 	private void fillAccumulativeIntensity(List<Player> players) {
 		for (Player player : players) {
 			playersAccumulativeIntensity.put(player.name,
@@ -58,19 +63,12 @@ public class Game {
 		}
 	}
 
-	public AccumulativeIntensity getIntensity(int sensorId) {
-		String playerName = null;
-		Player player = getPlayerBySensorId(sensorId);
-		if (player != null)
-			playerName = player.name;
-
-		if (playerName != null)
-			if (playersAccumulativeIntensity.containsKey(playerName))
-				return playersAccumulativeIntensity.get(playerName);
-
+	public AccumulativeIntensity getIntensity(String playerName){
+		if (playersAccumulativeIntensity.containsKey(playerName))
+			return playersAccumulativeIntensity.get(playerName);
 		return null;
 	}
-
+	
 	private int indexOfPlayer(String playerName, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).name.equalsIgnoreCase(playerName))
@@ -87,7 +85,7 @@ public class Game {
 			return null;
 	}
 
-	public Player getPlayerByName(String playerName) {
+	public Player getPlayer(String playerName) {
 		int i = indexOfPlayer(playerName, teamA);
 		if (i >= 0)
 			return teamA.players.get(i);
@@ -98,11 +96,25 @@ public class Game {
 		}
 		return null;
 	}
+	
+	public static double calculateSpeed(double v) {
+		return v * 3600D * Math.pow(10, -9);
+	}
 
-	public Player getPlayerBySensorId(int sensorId) {
-		for (Player player : teamA.players)
-			if (player.hasSensorId(sensorId))
-				return player;
-		return null;
+	public static Intensitiy getIntesity(double v) {
+		double speed = calculateSpeed(v);
+
+		if (0 <= speed && speed <= 1)
+			return Intensitiy.Standing;
+		else if (speed <= 11)
+			return Intensitiy.Trot;
+		else if (speed <= 14)
+			return Intensitiy.LowSpeedRun;
+		else if (speed <= 17)
+			return Intensitiy.MediumSpeedRun;
+		else if (speed <= 24)
+			return Intensitiy.HighSpeedRun;
+		else
+			return Intensitiy.Sprint;
 	}
 }

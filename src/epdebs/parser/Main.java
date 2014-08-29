@@ -18,8 +18,6 @@ import epdebs.queries.ContactListener;
 import epdebs.queries.ContactStatement;
 import epdebs.queries.GoalListener;
 import epdebs.queries.GoalStatement;
-import epdebs.queries.IntensityListener;
-import epdebs.queries.IntensityStatement;
 import epdebs.queries.PauseIntervalListener;
 import epdebs.queries.PauseIntervalStatement;
 import epdebs.queries.PlayerLocationListener;
