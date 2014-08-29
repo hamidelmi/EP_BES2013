@@ -16,7 +16,7 @@ import eplab.anfragen.AccumulativeIntensityStatement;
 import eplab.anfragen.EchoListener;
 import eplab.anfragen.IntensityStatement;
 
-public class Query2Main {
+public class Query1Main {
 
 	public static class CEPListener implements UpdateListener {
 
