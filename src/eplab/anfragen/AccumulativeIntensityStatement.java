@@ -9,9 +9,10 @@ public class AccumulativeIntensityStatement {
 
 	public AccumulativeIntensityStatement(EPAdministrator admin,
 			UpdateListener listener) {
-		String query = "insert into accIqq "
+
+		String query = "INSERT INTO accIqq "
 				+ " select accI.* "
-				+ " from InstantIntensityEvent iie, method:eplab.anfragen.AccumulativeIntensity.Instantiate(iie.sid,iie.ts,iie.abs_v,iie.InstantIntensity) accI";
+				+ " from Event iie, method:eplab.anfragen.AccumulativeIntensity.Instantiate(iie.sid,iie.ts,iie.abs_v) accI";
 
 		this.statement = admin.createEPL(query);
 		this.statement2 = admin
