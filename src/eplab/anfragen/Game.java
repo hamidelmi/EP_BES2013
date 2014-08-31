@@ -8,7 +8,15 @@ package eplab.anfragen;
 import epdebs.game_objects.Intensitiy;
 import eplab.bodenobjekte.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +26,15 @@ public class Game {
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
+
+	protected static int bottomField = -33960;
+	protected static int leftField = 0;
+	protected static int topField = 33960;
+	protected static int rightField = 52483;
+
+	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
+	protected static ArrayList<Double> endTS = new ArrayList<Double>();
+	protected static int initTsArray = 0;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -140,5 +157,89 @@ public class Game {
 			return Intensitiy.HighSpeedRun;
 		else
 			return Intensitiy.Sprint;
+	}
+
+	public static int StatusInField(long x, long y, long z) {
+		if ((x < leftField) || (x > rightField) || (y > topField)
+				|| (y < bottomField)) {
+			return -1;
+		}
+		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D)
+				&& (z < 2440.0D)) {
+			return 1;
+		}
+		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
+				&& (z < 2440.0D)) {
+			return 2;
+		}
+		return 0;
+	}
+
+	public static long GetEuclideanDistance(int x1, int y1, int z1, int x2,
+			int y2, int z2) {
+		double a = Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
+				+ Math.pow(z2 - z1, 2.0D);
+
+		double d = Math.sqrt(a);
+
+		return (long) d;
+	}
+
+	public static boolean isValidInterval(Double ts) throws IOException {
+
+		int y;
+		if (initTsArray == 0) {
+			BufferedReader br = new BufferedReader(new FileReader(
+					Settings.matchIntervalFilePath));
+			String[] splitLine = null;
+			String splitString = null;
+			int gameHalf = 0;
+			int event_id = 0;
+			while ((splitString = br.readLine()) != null) {
+				splitLine = splitString.toString().split(";");
+				if (splitLine[0].startsWith("20")) {
+					gameHalf = 1;
+				} else
+					gameHalf = 2;
+				if (splitLine[2].split(" ")[2].equals("Begin")) {
+					beginTS.add(convertStringtoMilliSec(splitLine[2]));
+				} else {
+					endTS.add(convertStringtoMilliSec(splitLine[2]));
+				}
+			}
+			br.close();
+			initTsArray = 1;
+		}
+
+		for (Double s : beginTS) {
+			if (ts.compareTo(s) <= 0) {
+				y = beginTS.indexOf(s-1);
+				if (ts.compareTo(endTS.get(y)) <= 0) {
+					return true;
+				} 
+			}
+			
+		}
+		return false;
+
+	}
+
+	public static double convertStringtoMilliSec(String currTime) {
+		String sTimeStampFormat = "hh:mm:ss.SSS";
+		SimpleDateFormat intervalTimeFormat = new SimpleDateFormat(
+				sTimeStampFormat);
+		Calendar baseCal = new GregorianCalendar();
+		try {
+			baseCal.setTime(intervalTimeFormat.parse("00:00:00.000"));
+			Date parsedDate = intervalTimeFormat.parse(currTime);
+			Calendar tmpCal = new GregorianCalendar();
+			tmpCal.setTime(parsedDate);
+
+			return tmpCal.getTimeInMillis() - baseCal.getTimeInMillis();
+		} catch (Exception e) {
+			System.out.println("error converting ts to pico seconds");
+			return 1800000L;
+		}
+
 	}
 }

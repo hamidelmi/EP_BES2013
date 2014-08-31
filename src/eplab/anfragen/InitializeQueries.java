@@ -38,7 +38,7 @@ public class InitializeQueries {
 		
 		
 		
-		 new ValidPostionStatement(epService.getEPAdministrator(), new ValidPostionListener());
+		 new ValidBallPostionStatement(epService.getEPAdministrator(), new ValidBallPostionListener());
 		
 		DataFileParser df = new DataFileParser();
 		Event currentEvent = df.createNewEvent();
