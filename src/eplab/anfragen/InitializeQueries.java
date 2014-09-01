@@ -32,8 +32,8 @@ public class InitializeQueries {
 		EPServiceProvider epService = EPServiceProviderManager
 				.getDefaultProvider(configuration);
 
-		new ValidBallPostionStatement(epService.getEPAdministrator(),
-				new ValidBallPostionListener());
+		new GoalStatement(epService.getEPAdministrator(),
+				new GoalListener());
 
 		DataFileParser df = new DataFileParser();
 		Event currentEvent = df.createNewEvent();

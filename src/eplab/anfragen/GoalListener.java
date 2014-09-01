@@ -10,7 +10,6 @@ public class GoalListener implements UpdateListener
 	  {
 	    public void update(EventBean[] newEventBean, EventBean[] oldEventBean)
 	    {
-	    	System.out.println("Goal update started...");
 	      if (newEventBean == null)
 	      {
 	        return;

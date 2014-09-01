@@ -16,7 +16,7 @@ public class ValidBallPostionStatement {
 						+ "RawPos.ax as ax, RawPos.ay as ay, RawPos.az as az, "
 						+ "RawPos.abs_v as abs_v, RawPos.abs_a as abs_a, "
 //						+ "Entity.name as name, Entity.entityType as entType,"
-						+ "eplab.anfragen.Game.StatusInField(RawPos.x,RawPos.y,RawPos.z) as PosInField"
+						+ "eplab.anfragen.Game.StatusInField(RawPos.x,RawPos.y,RawPos.z) as PosInField "
 //						+ "debs13.challenge.game.Game.GetTimeInGame(RawPos.ts) as timeInGame"
 						+ "from PositionEvent RawPos";
 //						+ "method:debs13.challenge.game.Game.GetEntityFromSensorIds(sid) Entity ";
