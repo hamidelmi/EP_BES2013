@@ -8,13 +8,13 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 
-import epdebs.game_objects.Game;
-import epdebs.parser.DataFileParser;
-import epdebs.parser.Event;
-import epdebs.parser.Settings;
 import eplab.anfragen.AccumulativeIntensityStatement;
+import eplab.anfragen.DataFileParser;
 import eplab.anfragen.EchoListener;
+import eplab.anfragen.Game;
 import eplab.anfragen.IntensityStatement;
+import eplab.anfragen.Settings;
+import eplab.bodenobjekte.Event;
 
 public class Query1Main {
 
@@ -36,8 +36,9 @@ public class Query1Main {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-//		IntensityStatement intensityStatement = new IntensityStatement(cepAdm,
-//				new EchoListener());
+		// IntensityStatement intensityStatement = new
+		// IntensityStatement(cepAdm,
+		// new EchoListener());
 
 		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
 				cepAdm, new EchoListener());

@@ -5,7 +5,6 @@ package eplab.anfragen;
  * Also it holds all the utility functions needed in all queries 
  * 
  */
-import epdebs.game_objects.Intensitiy;
 import eplab.bodenobjekte.*;
 
 import java.io.BufferedReader;
