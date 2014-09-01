@@ -5,6 +5,7 @@ package eplab.anfragen;
  * Also it holds all the utility functions needed in all queries 
  * 
  */
+
 import epdebs.game_objects.Intensitiy;
 import eplab.bodenobjekte.*;
 
@@ -18,6 +19,10 @@ public class Game {
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
+	protected static int bottomField = -33960;
+	protected static int leftField = 0;
+	protected static int topField = 33960;
+	protected static int rightField = 52483;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -140,5 +145,29 @@ public class Game {
 			return Intensitiy.HighSpeedRun;
 		else
 			return Intensitiy.Sprint;
+	}
+	
+	public static int GetFiledWidth()
+	{
+		return rightField - leftField;
+	}
+
+	public static int GetFiledHeight()
+	{
+		return topField - bottomField;
+	}
+	
+	public static int StatusInField(long x, long y, long z)
+	{
+		if ((x < leftField) || (x > rightField) || (y > topField) || (y < bottomField)) {
+			return -1;
+		}
+		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D) && (z < 2440.0D)) {
+			return 1;
+		}
+		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D) && (z < 2440.0D)) {
+			return 2;
+		}
+		return 0;
 	}
 }
