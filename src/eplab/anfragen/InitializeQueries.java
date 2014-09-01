@@ -14,8 +14,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import com.espertech.esper.client.Configuration;
+
+import epdebs.game_objects.Game;
 import epdebs.parser.Event;
 import epdebs.parser.DataFileParser;
+
 
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
@@ -29,20 +32,13 @@ public class InitializeQueries {
 		Configuration configuration = new Configuration();
 //		configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
 		
-		configuration.addEventType("HeatMapEvent", Event.class.getName());
+		configuration.addEventType("PositionEvent", Event.class.getName());
 		
 		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(configuration);
 		
-		//new PositionStatement(epService.getEPAdministrator());
-		//enPosEventStmt.addListener(new PositionListener());
 		
-		new NormalPositionStatement(epService.getEPAdministrator());
 		
-		new HeatPositionStatement(epService.getEPAdministrator(), new HeatPositionListener());
-		
-		new HeatMapDeltaPositionStatement(epService.getEPAdministrator(), new HeatMapDeltaPositionListener());
-		
-		new AccumulativeHeatMapStatement(epService.getEPAdministrator());
+		 new ValidBallPostionStatement(epService.getEPAdministrator(), new ValidBallPostionListener());
 		
 		DataFileParser df = new DataFileParser();
 		Event currentEvent = df.createNewEvent();

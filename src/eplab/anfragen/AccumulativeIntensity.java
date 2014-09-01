@@ -8,7 +8,19 @@ public class AccumulativeIntensity {
 	public boolean active;
 
 	public static AccumulativeIntensityEvent Instantiate(int sensorId, long ts,
-			long abs_v, int instanceIntensity) {
+			long abs_v) {
+		int instanceIntensity = 5;
+
+		if (abs_v < AccumulativeIntensity.SpeedToV(1))
+			instanceIntensity = 0;
+		else if (abs_v < AccumulativeIntensity.SpeedToV(11))
+			instanceIntensity = 1;
+		else if (abs_v < AccumulativeIntensity.SpeedToV(13))
+			instanceIntensity = 2;
+		else if (abs_v < AccumulativeIntensity.SpeedToV(17))
+			instanceIntensity = 3;
+		else if (abs_v < AccumulativeIntensity.SpeedToV(24))
+			instanceIntensity = 5;
 		Game game = Game.Singleton();
 		AccumulativeIntensityEvent result = new AccumulativeIntensityEvent();
 		AccumulativeIntensity current = game.getIntensity(sensorId);
@@ -37,6 +49,10 @@ public class AccumulativeIntensity {
 			current.lastIntTs = ts;
 		}
 		return result;
+	}
+
+	public static int SpeedToV(long speed) {
+		return (int) (speed * Math.pow(10, 6) / 3.6);
 	}
 
 	public static long GetDistance(long velocity, long lTimeDelta) {

@@ -17,9 +17,9 @@ public class BallTouchStatement {
 						+ "BallEventA.ay as ay, BallEventA.az as az, BallEventA.abs_v as abs_v,"
 						+ "(BallEventA.abs_a / Math.pow(10, 6)) as abs_a, "
 						+ "(BallEventB.abs_a / Math.pow(10, 6)) as abs_b,"
-						+ "from pattern [every (BallEventA = RelevantPositionEvent(entType=2 "
+						+ "from pattern [every (BallEventA = ValidBallPostionEvent(sid in (4, 8, 10, 12) "
 						+ "and Math.abs(abs_a)/Math.pow(10, 6)> 55)-> "
-						+ "BallEventB = RelevantPositionEvent(entType=2 and "
+						+ "BallEventB = ValidBallPostionEvent(sid in (4, 8, 10, 12) and "
 						+ "BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
 		
     	
