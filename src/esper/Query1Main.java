@@ -36,8 +36,8 @@ public class Query1Main {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		IntensityStatement intensityStatement = new IntensityStatement(cepAdm,
-				null);
+//		IntensityStatement intensityStatement = new IntensityStatement(cepAdm,
+//				new EchoListener());
 
 		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
 				cepAdm, new EchoListener());

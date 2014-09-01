@@ -213,12 +213,12 @@ public class Game {
 
 		for (Double s : beginTS) {
 			if (ts.compareTo(s) <= 0) {
-				y = beginTS.indexOf(s-1);
+				y = beginTS.indexOf(s - 1);
 				if (ts.compareTo(endTS.get(y)) <= 0) {
 					return true;
-				} 
+				}
 			}
-			
+
 		}
 		return false;
 
