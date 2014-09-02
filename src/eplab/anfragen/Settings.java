@@ -6,9 +6,9 @@ public class Settings
 	 public static String sPathToInterruptionPath = "C:/Users/SAMIR SAHU/Documents/referee-events/Game Interruption";
 	
 	//Ali local settings//
-	public static String dataFilePath = "D:\\Courses\\Event processing\\Add on\\full-game.info"; 
-	public static String metadataFilePath = "D:\\Courses\\Event processing\\Add on\\metadata.txt";
-	public static String matchInfoFilePath = "D:\\Courses\\Event processing\\Add on\\referee-events.tar.gz";
+	//public static String dataFilePath = "D:\\Courses\\Event processing\\Add on\\full-game.info"; 
+	//public static String metadataFilePath = "D:\\Courses\\Event processing\\Add on\\metadata.txt";
+	//public static String matchInfoFilePath = "D:\\Courses\\Event processing\\Add on\\referee-events.tar.gz";
 	//..................//
 
 	//Arun local settings//
