@@ -220,7 +220,6 @@ public class Game {
 
 		}
 		return false;
-
 	}
 
 	public static double convertStringtoMilliSec(String currTime) {
@@ -240,5 +239,40 @@ public class Game {
 			return 1800000L;
 		}
 
+	}
+	
+	public static int IsGoal(long ts, int x, int y, int z, int abs_v, int vx,
+			int vy, int vz) {
+		double interval = 1.5D;
+
+		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
+				abs_v, vx, vy, vz);
+
+		int iStatusInfield = StatusInField(nextCoordinate.x,
+				nextCoordinate.y, nextCoordinate.z);
+
+		if ((iStatusInfield == 1) || (iStatusInfield == 2)) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	protected static Coordinate GetPositionInInterval(double interval, int cur_x,
+			int cur_y, int cur_z, int cur_abs_v, int cur_vx, int cur_vy,
+			int cur_vz) {
+		long future_x = 0L;
+		long future_y = 0L;
+		long future_z = 0L;
+
+		future_x = (long) (cur_x + cur_abs_v * cur_vx * Math.pow(10.0D, -3.0D)
+				* interval);
+
+		future_y = (long) (cur_y + cur_abs_v * cur_vy * Math.pow(10.0D, -3.0D)
+				* interval);
+
+		future_z = (long) (9810.0D * Math.pow(interval, 2.0D) / 2.0D + cur_vz
+				* interval + cur_z);
+
+		return new Coordinate(future_x, future_y, future_z);
 	}
 }

@@ -12,9 +12,9 @@ public class GoalStatement
 	  {
 		  System.out.println("Goal stmt");
 	    String query = "insert into GoalEvent "
-	    		    + "select * from pattern[GoalEvent= BallTouchEvent(goal = 1) "
-	    		    + "->ballPositionEvent=RelevantPositionEvent(entType = 2) "
-	    		    + "until (BallContactEvent or OutOfPlayEvent)] ";
+	    		    + "select * from pattern[GoalEvent= BallContactEvent(shotongoal = 1) "
+	    		  //  + "->ballPositionEvent=RelevantPositionEvent(entType = 2) "
+	    		    + "until (BallContactEvent"+/* or OutOfPlayEvent*/")] ";
 	    
 	    this.epsStatement = epAdministrator.createEPL(query);
 	    this.epsStatement.addListener(listener);
