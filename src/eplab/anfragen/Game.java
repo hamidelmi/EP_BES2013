@@ -209,5 +209,5 @@ public class Game {
 	{
 	  double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
 	  return new Double(seconds);
-	  }
+	}
 }

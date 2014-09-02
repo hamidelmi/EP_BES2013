@@ -65,8 +65,10 @@ public class AccumulativeHeatMapStatement
 		String resultString = "insert into AggHeatMapEvent_" + minutes 
 							+ " select dEvent.playerName as playerName, "
 							+ " dEvent.resolution as resolution, " 
-							+ " dEvent.cell_x1 as cell_x1, dEvent.cell_y1 as cell_y1, " 
-							+ " dEvent.cell_x2 as cell_x2, dEvent.cell_y2 as cell_y2," 
+							+ " dEvent.cell_x1 as cell_x1, "
+							+ " dEvent.cell_y1 as cell_y1, " 
+							+ " dEvent.cell_x2 as cell_x2, "
+							+ " dEvent.cell_y2 as cell_y2, " 
 							+ " (sum(dEvent.dts) / " + totaltime + ") * 100.0  as percent_time_in_time_cell" 
 							+ " from DeltaHPEvent" + winlength + " as dEvent" 
 							+ " group by playerName, resolution, cell_x1, cell_y1, cell_x2, cell_y2" 

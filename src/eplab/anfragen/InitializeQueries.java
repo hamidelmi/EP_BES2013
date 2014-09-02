@@ -29,14 +29,14 @@ public class InitializeQueries {
 		Configuration configuration = new Configuration();
 //		configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
 		
-		configuration.addEventType("HeatMapEvent", Event.class.getName());
+		configuration.addEventType("PositionEvent", Event.class.getName());
 		
 		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(configuration);
 		
 		//new PositionStatement(epService.getEPAdministrator());
 		//enPosEventStmt.addListener(new PositionListener());
 		
-		new PlayerPositionStatement(epService.getEPAdministrator(), new PlayerPositionListener());
+		//new PlayerPositionStatement(epService.getEPAdministrator(), new PlayerPositionListener());
 		
 		new HeatPositionStatement(epService.getEPAdministrator(), new HeatPositionListener());
 		
