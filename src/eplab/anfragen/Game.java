@@ -6,7 +6,8 @@ package eplab.anfragen;
  * 
  */
 
-import epdebs.game_objects.Intensitiy;
+import eplab.anfragen.GameInterval;
+import eplab.bodenobjekte.Intensitiy;
 import eplab.bodenobjekte.*;
 
 import java.util.ArrayList;
@@ -19,10 +20,15 @@ public class Game {
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
+	protected static GameInterval oGameInterval = new GameInterval();
 	protected static int bottomField = -33960;
 	protected static int leftField = 0;
 	protected static int topField = 33960;
 	protected static int rightField = 52483;
+	protected static long tsGameStartFrst = Long.parseLong("10753295594424116");
+	protected static long tsGameEndFrst = Long.parseLong("12557295594424116");
+	protected static long tsGameStartSnd = Long.parseLong("13086639146403495");
+	protected static long tsGameEndSnd = Long.parseLong("14879639146403495");
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -125,6 +131,10 @@ public class Game {
 		}
 		return null;
 	}
+	
+	public String getPlayerName(int sensorId) {
+		return getPlayer(sensorId).name;
+	}
 
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
@@ -170,4 +180,34 @@ public class Game {
 		}
 		return 0;
 	}
+	public static double GetTimeInGame(long ts)
+	{
+		return oGameInterval.getCurrGameTime(ElapsedSecondsFromStart(ts));
+	}
+	public static double ElapsedSecondsFromStart(long ts)
+	{
+		int gameHalf = CurrentGameHalf(ts);
+	    if (gameHalf == 1) {
+	      return ElapsedSeconds(tsGameStartFrst, ts).doubleValue();
+	    }
+	    if (gameHalf == 2) {
+	    return ElapsedSeconds(tsGameStartSnd, ts).doubleValue();
+	    }
+	    	return 0.0D;
+	}
+	public static int CurrentGameHalf(long ts)
+	{
+	  if ((ts >= tsGameStartFrst) && (ts <= tsGameEndFrst)) {
+	    return 1;
+	  }
+	  if ((ts >= tsGameStartSnd) && (ts <= tsGameEndSnd)) {
+	    return 2;
+	  }
+	  return -1;
+	}
+	public static Double ElapsedSeconds(long tsStart, long tsEnd)
+	{
+	  double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
+	  return new Double(seconds);
+	  }
 }

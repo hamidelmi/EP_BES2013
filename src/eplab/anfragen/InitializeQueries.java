@@ -36,7 +36,7 @@ public class InitializeQueries {
 		//new PositionStatement(epService.getEPAdministrator());
 		//enPosEventStmt.addListener(new PositionListener());
 		
-		new NormalPositionStatement(epService.getEPAdministrator());
+		new PlayerPositionStatement(epService.getEPAdministrator(), new PlayerPositionListener());
 		
 		new HeatPositionStatement(epService.getEPAdministrator(), new HeatPositionListener());
 		

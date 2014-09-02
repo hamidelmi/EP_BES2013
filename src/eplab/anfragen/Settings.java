@@ -2,6 +2,9 @@ package eplab.anfragen;
 
 public class Settings 
 {
+//	Samir local settings//
+	 public static String sPathToInterruptionPath = "C:/Users/SAMIR SAHU/Documents/referee-events/Game Interruption";
+	
 	//Ali local settings//
 	public static String dataFilePath = "D:\\Courses\\Event processing\\Add on\\full-game.info"; 
 	public static String metadataFilePath = "D:\\Courses\\Event processing\\Add on\\metadata.txt";
