@@ -180,7 +180,7 @@ public class GameInterval
       }
       catch (IOException e)
       {
-        System.out.println("error reading interaption file");
+        System.out.println("error reading interruption file");
         return false;
       }
     }
@@ -188,9 +188,9 @@ public class GameInterval
     return true;
   }
   
-  public void printGameInteraption()
+  public void printGameInterruption()
   {
-    System.out.println("Print game interaptions :");
+    System.out.println("Print game interruptions :");
     Iterator<GameInterval> it = this.IntervalsVector.iterator();
     while (it.hasNext())
     {
@@ -246,7 +246,7 @@ public class GameInterval
     
     gi.ParseGameInterruptionsFile(Settings.sPathToInterruptionPath);
     
-    gi.printGameInteraption();
+    gi.printGameInterruption();
     
     System.out.println("time in game :" + gi.getCurrGameTime(179.08000000000001D));
   }
