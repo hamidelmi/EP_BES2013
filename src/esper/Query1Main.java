@@ -11,8 +11,8 @@ import com.espertech.esper.client.UpdateListener;
 import eplab.anfragen.AccumulativeIntensityStatement;
 import eplab.anfragen.DataFileParser;
 import eplab.anfragen.EchoListener;
+import eplab.anfragen.FileListener;
 import eplab.anfragen.Game;
-import eplab.anfragen.IntensityStatement;
 import eplab.anfragen.Settings;
 import eplab.bodenobjekte.Event;
 
@@ -41,7 +41,7 @@ public class Query1Main {
 		// new EchoListener());
 
 		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
-				cepAdm, new EchoListener());
+				cepAdm, new FileListener("c:\1.txt"));
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();

@@ -21,6 +21,7 @@ public class AccumulativeIntensity {
 			instanceIntensity = 3;
 		else if (abs_v < AccumulativeIntensity.SpeedToV(24))
 			instanceIntensity = 5;
+		
 		Game game = Game.Singleton();
 		AccumulativeIntensityEvent result = new AccumulativeIntensityEvent();
 		AccumulativeIntensity current = game.getIntensity(sensorId);
@@ -32,8 +33,8 @@ public class AccumulativeIntensity {
 			long delta = ts - current.ts;
 			long distance = GetDistance(speed, delta);
 
-			result.setTs_start(current.ts);
-			result.setTs_stop(ts);
+			result.setTs_start(current.ts / 1000000000);
+			result.setTs_stop(ts / 1000000000);
 			result.setPlayer_id(sensorId);
 			result.setIntensity(current.intensity);
 			result.setDistance(distance);
