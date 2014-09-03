@@ -14,8 +14,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import com.espertech.esper.client.Configuration;
-import epdebs.parser.Event;
-import epdebs.parser.DataFileParser;
+
+import eplab.bodenobjekte.Event;
+import eplab.anfragen.DataFileParser;
 
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;

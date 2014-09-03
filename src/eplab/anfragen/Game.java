@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Game {
 	private static Game instance;
-	protected Team teamA, teamB;
+	protected static Team teamA, teamB;
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
@@ -131,10 +131,6 @@ public class Game {
 		}
 		return null;
 	}
-	
-	public String getPlayerName(int sensorId) {
-		return getPlayer(sensorId).name;
-	}
 
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
@@ -180,10 +176,13 @@ public class Game {
 		}
 		return 0;
 	}
+	
 	public static double GetTimeInGame(long ts)
 	{
-		return oGameInterval.getCurrGameTime(ElapsedSecondsFromStart(ts));
+		double x = oGameInterval.getCurrGameTime(ElapsedSecondsFromStart(ts));
+		return x;
 	}
+	
 	public static double ElapsedSecondsFromStart(long ts)
 	{
 		int gameHalf = CurrentGameHalf(ts);
@@ -195,6 +194,7 @@ public class Game {
 	    }
 	    	return 0.0D;
 	}
+	
 	public static int CurrentGameHalf(long ts)
 	{
 	  if ((ts >= tsGameStartFrst) && (ts <= tsGameEndFrst)) {
@@ -205,9 +205,23 @@ public class Game {
 	  }
 	  return -1;
 	}
+	
 	public static Double ElapsedSeconds(long tsStart, long tsEnd)
 	{
 	  double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
 	  return new Double(seconds);
+	}
+	
+	public static String getPlayerName(String sensorId) {
+		String x = null;
+		for (int i = 0; i < teamA.players.size(); i++)
+			if (teamA.players.get(i).hasSensorId(Integer.parseInt(sensorId))) {
+				x = teamA.players.get(i).name;
+				return x;
+			} else if (teamB.players.get(i).hasSensorId(Integer.parseInt(sensorId))) {
+				x = teamB.players.get(i).name;
+				return x;
+			}
+		return null;
 	}
 }

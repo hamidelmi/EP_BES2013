@@ -12,7 +12,7 @@ public class HeatPositionStatement
 	{
 		String stmt = "insert into HeatPositionEvent "
 					+ "select pe.ts as ts, "
-					+ "'abc' as playerName, "
+					+ "eplab.anfragen.Game.getPlayerName(sid) as playerName, "
 					+ "hm.resolution as resolution, "
 					+ "eplab.anfragen.Game.GetTimeInGame(pe.ts) as timeInGame, "
 					+ "eplab.bodenobjekte.Grid.GetLeftX(pe.x, hm.resWidth, hm.cellWidth, hm.cellWidthAdj) as cell_x1, "
