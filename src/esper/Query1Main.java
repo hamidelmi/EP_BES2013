@@ -49,8 +49,9 @@ public class Query1Main {
 		Event curPosEvent = parser.createNewEvent();
 
 		int c = 0;
-		while (curPosEvent != null && c++ < 100) {
-			cep.getEPRuntime().sendEvent(curPosEvent);
+		while (curPosEvent != null && c++ < 10000000) {
+			if (curPosEvent.getsid() == 59 || curPosEvent.getsid() == 28)
+				cep.getEPRuntime().sendEvent(curPosEvent);
 
 			curPosEvent = parser.createNewEvent();
 		}

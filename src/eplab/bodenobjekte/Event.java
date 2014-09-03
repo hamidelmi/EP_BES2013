@@ -68,8 +68,7 @@ public class Event {
 	}
 
 	public Event(int sid, long ts, int x, int y, int z, int abs_v, int vx,
-			int vy, int vz, int abs_a, int ax, int ay, int az) 
-	{
+			int vy, int vz, int abs_a, int ax, int ay, int az) {
 		this.sid = sid;
 		this.ts = ts;
 		this.x = x;
@@ -85,22 +84,11 @@ public class Event {
 		this.az = az;
 	}
 
-	public String toString() 
-	{
-		return
-		this.sid + "," 
-		+ this.ts + "," 
-		+ this.x + "," 
-		+ this.y + ","
-		+ this.z + "," 
-		+ this.abs_v + "," 
-		+ this.vx + "," 
-		+ this.vy + "," 
-		+ this.vz + "," 
-		+ this.abs_a + "," 
-		+ this.ax + ","
-		+ this.ay + "," 
-		+ this.az;
+	public String toString() {
+		return this.sid + "," + this.ts + "," + this.x + "," + this.y + ","
+				+ this.z + "," + this.abs_v + "," + this.vx + "," + this.vy
+				+ "," + this.vz + "," + this.abs_a + "," + this.ax + ","
+				+ this.ay + "," + this.az;
 	}
 
 }
