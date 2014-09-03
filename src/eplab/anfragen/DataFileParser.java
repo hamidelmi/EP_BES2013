@@ -16,7 +16,7 @@ public class DataFileParser {
 	public DataFileParser() {
 		try {
 			br = new BufferedReader(new FileReader(Settings.dataFilePath));
-			System.out.println("File read successfully !!!!");
+			//System.out.println("File read successfully !!!!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,8 +25,8 @@ public class DataFileParser {
 	public Event createNewEvent() {
 		try {
 			eventLine = br.readLine();
-			System.out.println("Readline successfull ");
-			System.out.println(eventLine);
+			//System.out.println("Readline successfull ");
+			//System.out.println(eventLine);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

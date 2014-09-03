@@ -12,7 +12,7 @@ public class BallPossessionStatement {
 		String query = "insert into BallPossessionEvent"
 						+ "select EarlierEvent.player_ts as ts,"
 						+ "CurrentEvent.palyerName as palyerName,"
-						+ "epdebs.game_objects.Game.GetTeamName(CurrentEvent.palyerName) as teamId,"
+						//+ "epdebs.game_objects.Game.GetTeamName(CurrentEvent.palyerName) as teamId,"
 						+ "EarlierEvent.player_ts - CurrentEvent.player_ts as time,"
 						+ "1 as hit"
 						+ "from pattern [every (CurrentEvent = ContactEvent-> "
