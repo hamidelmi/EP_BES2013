@@ -160,16 +160,18 @@ public class Game {
 	}
 
 	public static int StatusInField(long x, long y, long z) {
-		if ((x < leftField) || (x > rightField) || (y > topField)
-				|| (y < bottomField)) {
-			return -1;
-		}
+//		if ((x < leftField) || (x > rightField) || (y > topField)
+//				|| (y < bottomField)) {
+//			return -1;
+//		}
 		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D)
 				&& (z < 2440.0D)) {
+			//System.out.println("1");
 			return 1;
 		}
 		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
 				&& (z < 2440.0D)) {
+			//System.out.println("2");
 			return 2;
 		}
 		return 0;
@@ -193,6 +195,7 @@ public class Game {
 	  {
 	    int gameHalf = CurrentGameHalf(ts);
 	    if (gameHalf == 1) {
+	    	//System.out.println(ElapsedSeconds(tsGameStartFrst, ts).doubleValue());
 	      return ElapsedSeconds(tsGameStartFrst, ts).doubleValue();
 	    }
 	    if (gameHalf == 2) {
@@ -285,12 +288,12 @@ public class Game {
 			int vy, int vz) {
 		double interval = 1.5D;
 
-		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
-				abs_v, vx, vy, vz);
+//		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
+//				abs_v, vx, vy, vz);
 
-		int iStatusInfield = StatusInField(nextCoordinate.x, nextCoordinate.y,
-				nextCoordinate.z);
-
+//		int iStatusInfield = StatusInField(nextCoordinate.x, nextCoordinate.y,
+//				nextCoordinate.z);
+		int iStatusInfield = StatusInField(x, y,z);
 		if ((iStatusInfield == 1) || (iStatusInfield == 2)) {
 			return 1;
 		}

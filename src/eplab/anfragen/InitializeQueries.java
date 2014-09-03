@@ -62,11 +62,11 @@ public class InitializeQueries {
 		GoalStatement goalStatement = new GoalStatement(
 				epServiceProvider.getEPAdministrator(), new GoalListener());
 
-		DataFileParser df = new DataFileParser();
-		Event currentEvent = df.createNewEvent();
+		DataFileParser dataFileParser = new DataFileParser();
+		Event currentEvent = dataFileParser.createNewEvent();
 		while (currentEvent != null) {
 			epServiceProvider.getEPRuntime().sendEvent(currentEvent);
-			currentEvent = df.createNewEvent();
+			currentEvent = dataFileParser.createNewEvent();
 		}
 
 	}
