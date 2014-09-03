@@ -14,7 +14,7 @@ public void update(EventBean[] newEvents, EventBean[] oldEvents)
   for (EventBean theEvent : newEvents)
   {
     double tsInGame = Double.parseDouble(theEvent.get("ts").toString());
-    System.out.println("Game Pause Event pos received: at " + tsInGame + " : " + theEvent.getUnderlying());
+    //System.out.println("Game Pause Event pos received: at " + tsInGame + " : " + theEvent.getUnderlying());
   }
 }
 

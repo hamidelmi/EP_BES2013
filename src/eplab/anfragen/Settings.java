@@ -5,7 +5,7 @@ public class Settings
 	//Ali local settings//
 	public static String dataFilePath = "D:\\Courses\\Event processing\\Add on\\full-game.info"; 
 	public static String metadataFilePath = "D:\\Courses\\Event processing\\Add on\\metadata.txt";
-	public static String matchIntervalFilePath = "D:\\Courses\\Event processing\\Add on\\referee-events.tar.gz";
+	public static String matchIntervalFilePath = "D:\\Courses\\Event processing\\Add on\\full_game.csv";
 	//..................//
 
 	//Arun local settings//

@@ -17,6 +17,7 @@ public class GoalListener implements UpdateListener
 	      for (EventBean eventBean : newEventBean) 
 	      {
 	        System.out.println("Goal: " + eventBean.getUnderlying());
+	        System.out.println("Goalooo: " + eventBean.toString());
 	      }
 	    }
 	    

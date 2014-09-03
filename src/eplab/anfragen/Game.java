@@ -33,6 +33,7 @@ public class Game {
 
 	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
 	protected static ArrayList<Double> endTS = new ArrayList<Double>();
+	protected static GameIntervals oGameIntervals = new GameIntervals();
 	protected static int initTsArray = 0;
 
 	public static Game Singleton() {
@@ -184,6 +185,45 @@ public class Game {
 		return (long) d;
 	}
 
+	public static boolean IsActiveGame(long ts) {
+		return oGameIntervals.isActiveInterval(ElapsedSecondsFromStart(ts));
+	}
+	
+	  public static double ElapsedSecondsFromStart(long ts)
+	  {
+	    int gameHalf = CurrentGameHalf(ts);
+	    if (gameHalf == 1) {
+	      return ElapsedSeconds(tsGameStartFrst, ts).doubleValue();
+	    }
+	    if (gameHalf == 2) {
+	      return ElapsedSeconds(tsGameStartSnd, ts).doubleValue();
+	    }
+	    return 0.0D;
+	  }
+	  
+	  public static Double ElapsedSeconds(long tsStart, long tsEnd)
+	  {
+	    double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
+	    
+	    return new Double(seconds);
+	  }
+	  
+	  protected static long tsGameStartFrst = Long.parseLong("10753295594424116");
+	  protected static long tsGameEndFrst = Long.parseLong("12557295594424116");
+	  protected static long tsGameStartSnd = Long.parseLong("13086639146403495");
+	  protected static long tsGameEndSnd = Long.parseLong("14879639146403495");
+	  
+	  public static int CurrentGameHalf(long ts)
+	  {
+	    if ((ts >= tsGameStartFrst) && (ts <= tsGameEndFrst)) {
+	      return 1;
+	    }
+	    if ((ts >= tsGameStartSnd) && (ts <= tsGameEndSnd)) {
+	      return 2;
+	    }
+	    return -1;
+	  }
+
 	public static boolean isValidInterval(Double ts) throws IOException {
 
 		int y;
@@ -240,7 +280,7 @@ public class Game {
 		}
 
 	}
-	
+
 	public static int IsGoal(long ts, int x, int y, int z, int abs_v, int vx,
 			int vy, int vz) {
 		double interval = 1.5D;
@@ -248,18 +288,18 @@ public class Game {
 		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
 				abs_v, vx, vy, vz);
 
-		int iStatusInfield = StatusInField(nextCoordinate.x,
-				nextCoordinate.y, nextCoordinate.z);
+		int iStatusInfield = StatusInField(nextCoordinate.x, nextCoordinate.y,
+				nextCoordinate.z);
 
 		if ((iStatusInfield == 1) || (iStatusInfield == 2)) {
 			return 1;
 		}
 		return 0;
 	}
-	
-	protected static Coordinate GetPositionInInterval(double interval, int cur_x,
-			int cur_y, int cur_z, int cur_abs_v, int cur_vx, int cur_vy,
-			int cur_vz) {
+
+	protected static Coordinate GetPositionInInterval(double interval,
+			int cur_x, int cur_y, int cur_z, int cur_abs_v, int cur_vx,
+			int cur_vy, int cur_vz) {
 		long future_x = 0L;
 		long future_y = 0L;
 		long future_z = 0L;
@@ -275,4 +315,7 @@ public class Game {
 
 		return new Coordinate(future_x, future_y, future_z);
 	}
+	
+	
+	
 }
