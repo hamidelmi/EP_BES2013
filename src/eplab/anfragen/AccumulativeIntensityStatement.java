@@ -12,37 +12,39 @@ public class AccumulativeIntensityStatement {
 
 		String query = "INSERT INTO accIqq "
 				+ " select accI.* "
-				+ " from Event iie, method:eplab.anfragen.AccumulativeIntensity.Instantiate(iie.sid,iie.ts,iie.abs_v) accI";
+				+ " from Event, method:eplab.anfragen.AccumulativeIntensity.Instantiate(Event.sid,Event.ts,Event.abs_v) accI";
 
 		this.statement = admin.createEPL(query);
 		this.statement2 = admin
-				.createEPL("select accI.player_id as player_id,intensity, "
+				.createEPL("select accI.player_id as player_id,accI.minutes1,count(intensity),sum(intensity), "// ,max(accI.minutes1)
+				// as
+				// ts
 						+ "sum(case when intensity=0 "
 						+ " then (accI.distance) else 0 end) as standing_distance, "
 						+ "sum(case when intensity=0 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as standing_time,"
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as standing_time,"
 						+ "sum(case when intensity=1 "
 						+ " then (accI.distance) else 0 end) as trot_distance, "
 						+ "sum(case when intensity=1 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as trot_time,"
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as trot_time,"
 						+ "sum(case when intensity=2 "
 						+ " then (accI.distance) else 0 end) as low_distance, "
 						+ "sum(case when intensity=2 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as low_time,"
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as low_time,"
 						+ "sum(case when intensity=3 "
 						+ " then (accI.distance) else 0 end) as medium_distance, "
 						+ "sum(case when intensity=3 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as medium_time,"
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as medium_time,"
 						+ "sum(case when intensity=4 "
 						+ " then (accI.distance) else 0 end) as high_distance, "
 						+ "sum(case when intensity=4 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as high_time,"
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as high_time,"
 						+ "sum(case when intensity=5 "
 						+ " then (accI.distance) else 0 end) as sprint_distance, "
 						+ "sum(case when intensity=5 "
-						+ " then (accI.ts_stop - accI.ts_start)/1000000000 else 0 end) as sprint_time "
-						+ " from accIqq.win:time(300000 sec) accI"
-						+ " group by accI.player_id");
+						+ " then (accI.ts_stop - accI.ts_start) else 0 end) as sprint_time "
+						+ " from accIqq accI"//.win:time(5 minutes)
+						+ " group by accI.player_id,minutes1");
 		if (listener != null)
 			this.statement2.addListener(listener);
 	}
