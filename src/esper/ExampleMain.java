@@ -3,14 +3,20 @@ package esper;
 import com.espertech.esper.client.*;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import eplab.anfragen.*;
 import eplab.bodenobjekte.*;
 =======
+=======
+>>>>>>> origin/master
 import eplab.anfragen.DataFileParser;
 import eplab.anfragen.Game;
 import eplab.anfragen.Settings;
 import eplab.bodenobjekte.Event;
+<<<<<<< HEAD
 >>>>>>> 3f0b74b9083d932c989cf6e3312d7b005192ac87
+=======
+>>>>>>> origin/master
 
 import java.util.Random;
 import java.util.Date;
