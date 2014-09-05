@@ -2,11 +2,8 @@ package esper;
 
 import com.espertech.esper.client.*;
 
-import epdebs.game_objects.Game;
-import epdebs.parser.DataFileParser;
-import epdebs.parser.Event;
-import epdebs.parser.Main;
-import epdebs.parser.Settings;
+import eplab.anfragen.*;
+import eplab.bodenobjekte.*;
 
 import java.util.Random;
 import java.util.Date;

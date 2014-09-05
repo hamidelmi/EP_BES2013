@@ -10,8 +10,7 @@ public class BallPossessionListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("ball possession received :"
-					+ theEvent.getUnderlying());
+//			System.out.println("ball possession received :"	+ theEvent.getUnderlying());
 		}
 	}
 }

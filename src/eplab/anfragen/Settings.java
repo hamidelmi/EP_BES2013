@@ -9,7 +9,7 @@ public class Settings
 	//..................//
 
 	//Arun local settings//
-	public static String dataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\full-game.txt"; 
+	public static String dataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\full-game"; 
 	public static String metadataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\metadata.txt";
 	public static String matchIntervalFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\referee-events\\GameInterruption\\full_game.csv";
 

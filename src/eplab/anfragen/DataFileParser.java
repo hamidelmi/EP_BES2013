@@ -18,7 +18,7 @@ public class DataFileParser {
 		try
 		{
 			br = new BufferedReader(new FileReader(Settings.dataFilePath));
-			System.out.println("File read successfully !!!!");
+			System.out.println("File read successfully !!!!" + Settings.dataFilePath);
 		} 
 		catch (IOException e) 
 		{
@@ -31,8 +31,8 @@ public class DataFileParser {
 		try 
 		{
 			eventLine = br.readLine();
-			 System.out.println("Readline successfull ");
-			 System.out.println(eventLine);
+//			 System.out.println("Readline successfull ");
+//			 System.out.println(eventLine);
 		}
 		catch (IOException e) 
 		{

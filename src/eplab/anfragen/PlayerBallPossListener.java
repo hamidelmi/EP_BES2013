@@ -10,7 +10,8 @@ public class PlayerBallPossListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("ball possession aggregated for player:"
+			
+			System.out.println("Player ball possession aggregated for player:"
 					+ theEvent.getUnderlying());
 		}
 	}

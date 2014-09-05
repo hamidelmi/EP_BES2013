@@ -10,8 +10,7 @@ public class PlayerBallContactListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("Valid position received :"
-					+ theEvent.getUnderlying());
+//			System.out.println("Player Ball touch event received :" + theEvent.getUnderlying());
 		}
 	}
 }
