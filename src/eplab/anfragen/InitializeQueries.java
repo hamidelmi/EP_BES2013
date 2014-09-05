@@ -26,7 +26,8 @@ import com.espertech.esper.client.EPServiceProviderManager;
 public class InitializeQueries {
 
 	public void initialize() {
-		
+	//	GameIntervals gameIntervals = new GameIntervals();
+		//gameIntervals.ParseGameInterruptionsFile(Settings.matchIntervalFilePath);
 		new Game();
 		
 		Configuration configuration = new Configuration();
@@ -55,6 +56,25 @@ public class InitializeQueries {
 		 new PlayerBallPossStatement(epService.getEPAdministrator(), new PlayerBallPossListener());
 
 		 new TeamBallPossessionStatement(epService.getEPAdministrator(), new TeamBallPossessionListener());
+
+			PositionStatement positionStatement = new PositionStatement(
+					epService.getEPAdministrator(), new PositionListener());
+			PlayerLocationStatement playerLocationStatement = new PlayerLocationStatement(
+					epService.getEPAdministrator(),
+					new PlayerLocationListener());
+			RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
+					epService.getEPAdministrator(),
+					new RelevantPositionListener());
+			BallContactStatement ballContactStatement = new BallContactStatement(
+					epService.getEPAdministrator(),
+					new BallContactListener());
+			ContactStatement contactStatement = new ContactStatement(
+					epService.getEPAdministrator(), new ContactListener());
+			PauseIntervalStatement pauseIntervalStatement = new PauseIntervalStatement(
+					epService.getEPAdministrator(),
+					new PauseIntervalListener());
+			NotInGameStatement notInGameStatement = new NotInGameStatement(
+					epService.getEPAdministrator(), new NotInGameListener());
 
 		 DataFileParser df = new DataFileParser();
 		 Event currentEvent = df.createNewEvent();
