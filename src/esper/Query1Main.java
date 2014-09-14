@@ -1,4 +1,3 @@
-
 package esper;
 
 import com.espertech.esper.client.Configuration;
@@ -12,6 +11,7 @@ import com.espertech.esper.client.UpdateListener;
 import eplab.anfragen.AccumulativeIntensityStatement;
 import eplab.anfragen.DataFileParser;
 import eplab.anfragen.EchoListener;
+import eplab.anfragen.FileListener;
 import eplab.anfragen.Game;
 import eplab.anfragen.Settings;
 import eplab.bodenobjekte.Event;
@@ -36,8 +36,8 @@ public class Query1Main {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-//		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
-//				cepAdm, new FileListener("c:\1.txt"));
+		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
+				cepAdm, new FileListener("c:\1.txt"));
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();
