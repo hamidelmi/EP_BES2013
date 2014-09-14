@@ -21,10 +21,10 @@ public class BallTouchStatement {
 //						+ "from ValidPositionEvent BallEventA "
 //						+ "where eplab.anfragen.Game.isBall(sid) = true "
 //						+ "and Math.abs(abs_a)/ 1000000 > 55";
-						+ "from pattern [every BallEventA = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true "
+						+ "from pattern [every ( BallEventA = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true "
 						+ "and Math.abs(abs_a)/ 1000000 > 55) -> "
-						+ " every BallEventB = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true and "
-						+ "BallEventA.sid = sid and abs_a < BallEventA.abs_a)]";
+						+ " BallEventB = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true and "
+						+ "BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
 		
     	// eplab.anfragen.Game.isBall(sid) = true
 		//sid in ( '4', '8', '10', '12')

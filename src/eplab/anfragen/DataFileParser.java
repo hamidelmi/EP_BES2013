@@ -16,15 +16,15 @@ public class DataFileParser {
 	public DataFileParser() {
 		try {
 			br = new BufferedReader(new FileReader(Settings.dataFilePath));
-<<<<<<< HEAD
-			System.out.println("File read successfully !!!!" + Settings.dataFilePath);
-		} 
-		catch (IOException e) 
-		{
-=======
-			//System.out.println("File read successfully !!!!");
+//<<<<<<< HEAD
+//			System.out.println("File read successfully !!!!" + Settings.dataFilePath);
+//		} 
+//		catch (IOException e) 
+//		{
+//=======
+//			//System.out.println("File read successfully !!!!");
 		} catch (IOException e) {
->>>>>>> origin/master
+//>>>>>>> origin/master
 			e.printStackTrace();
 		}
 	}
@@ -32,17 +32,17 @@ public class DataFileParser {
 	public Event createNewEvent() {
 		try {
 			eventLine = br.readLine();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //			 System.out.println("Readline successfull ");
 //			 System.out.println(eventLine);
-		}
-		catch (IOException e) 
-		{
-=======
+//		}
+//		catch (IOException e) 
+//		{
+//=======
 			//System.out.println("Readline successfull ");
 			//System.out.println(eventLine);
 		} catch (IOException e) {
->>>>>>> origin/master
+//>>>>>>> origin/master
 			e.printStackTrace();
 		}
 		if (eventLine == null)

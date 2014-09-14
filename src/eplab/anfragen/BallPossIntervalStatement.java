@@ -12,19 +12,24 @@ public class BallPossIntervalStatement {
 	public BallPossIntervalStatement(EPAdministrator epAdministrator, UpdateListener listener) {
 		  String stmt_1 = "insert into BallPossIntervalEvent "
 				  + "select ContactEventB.player_ts as ts, "
+				  + "eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) as gameHalf, "
 				  + "ContactEventA.palyerName as palyerName, "
-				  + "eplab.anfragen.Game.getTeam(ContactEventA.palyerName) "
-				  + "as teamId, ContactEventB.player_ts - ContactEventA.player_ts as time, "
+				  + "eplab.anfragen.Game.getTeam(ContactEventA.palyerName) as teamId, "
+				  + "ContactEventB.player_ts - ContactEventA.player_ts as time, "
 				  + "1 as hit  from pattern "
-				  + "[every (ContactEventA = PlayerBallContactEvent -> "
-				  + "ContactEventB = PlayerBallContactEvent( ContactEventA.palyerName <> palyerName)) ]";
+				  + "[every ( ContactEventA = PlayerBallContactEvent -> "
+				  + " ContactEventB = PlayerBallContactEvent( ContactEventA.palyerName != ContactEventB.palyerName "
+				  + " and eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) != 0 "
+				  + " and eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) "
+				  + " = eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) ))]";
 
 		  String stmt_2 = " insert into BallPossIntervalEvent "
 		  		+ "select OutOfPlay.ts as ts, ContactEventA.palyerName as palyerName, "
+		  		+ "eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) as gameHalf, "
 		  		+ "eplab.anfragen.Game.getTeam(ContactEventA.palyerName) "
 		  		+ "as teamId, OutOfPlay.ts - ContactEventA.player_ts as time, "
 		  		+ "1 as hit  from pattern "
-		  		+ "[every (ContactEventA = PlayerBallContactEvent) -> (OutOfPlay = OutOfPlayEvent ) ]";
+		  		+ "[every (ContactEventA = PlayerBallContactEvent -> OutOfPlay = OutOfPlayEvent ) ]";
 
 		  
 		  

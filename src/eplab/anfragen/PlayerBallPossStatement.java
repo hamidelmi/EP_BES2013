@@ -15,7 +15,7 @@ public class PlayerBallPossStatement {
 						+ "sum(time) as time, "
 						+ "sum(hit) as hits "
 						+ "from BallPossIntervalEvent group by palyerName "
-						+ "output last every 100 events";
+						+ "output last every 1 events";
     	
 		this.statement = admin.createEPL(query);
 		this.statement.addListener(listener);
