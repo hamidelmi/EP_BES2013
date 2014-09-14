@@ -7,7 +7,6 @@ package eplab.anfragen;
  * 
  */
 
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -19,9 +18,6 @@ import eplab.bodenobjekte.Event;
 import eplab.bodenobjekte.GameIntervals;
 import eplab.anfragen.DataFileParser;
 
-
-
-
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 
@@ -30,78 +26,91 @@ public class InitializeQueries {
 	public void initialize() {
 //		GameIntervals gameIntervals = new GameIntervals();
 //		gameIntervals.ParseGameInterruptionsFile(Settings.matchIntervalFilePath);
+		GameIntervals gameIntervals = new GameIntervals();
+		String path = System.getenv("dataFilePath");
+		if (path == null || path.compareTo("") == 0)
+			path = Settings.dataFilePath;
+		else
+			Settings.dataFilePath = path;
+		gameIntervals.ParseGameInterruptionsFile(path);
 		new Game();
-		
+
 		Configuration configuration = new Configuration();
-//		configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
-		
-		configuration.addEventType("PositionEvent", Event.class.getName());
-		
-		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(configuration);
-		
-		 new NewPostionStatement(epService.getEPAdministrator(), new NewPostionListener());
-		
-		 new ValidPostionStatement(epService.getEPAdministrator(), new ValidPostionListener());
+		// configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
 
-		 new OutOfPlayStatement(epService.getEPAdministrator(), new OutOfPlayListener());
+		configuration.addEventType("Event", Event.class.getName());
 
-		 new PlayerWindowStatement(epService.getEPAdministrator());
+		EPServiceProvider epService = EPServiceProviderManager
+				.getDefaultProvider(configuration);
 
-		 new BallTouchStatement(epService.getEPAdministrator(), new BallTouchListener());
-		 
-		 new PlayerBallContactStatement(epService.getEPAdministrator(), new PlayerBallContactListener());
+		// new NewPostionStatement(epService.getEPAdministrator(),
+		// new NewPostionListener());
+		//
+		// new ValidPostionStatement(epService.getEPAdministrator(),
+		// new ValidPostionListener());
+		//
+		// new OutOfPlayStatement(epService.getEPAdministrator(),
+		// new OutOfPlayListener());
+		//
+		// new PlayerWindowStatement(epService.getEPAdministrator());
+		//
+		// new BallTouchStatement(epService.getEPAdministrator(),
+		// new BallTouchListener());
+		//
+		// new PlayerBallContactStatement(epService.getEPAdministrator(),
+		// new PlayerBallContactListener());
+		//
+		// new BallPossIntervalStatement(epService.getEPAdministrator(),
+		// new BallPossIntervalListener());
+		//
+		// new PlayerBallPossStatement(epService.getEPAdministrator(),
+		// new PlayerBallPossListener());
+		//
+		// new TeamBallPossessionStatement(epService.getEPAdministrator(),
+		// new TeamBallPossessionListener());
 
-		 new BallPossIntervalStatement(epService.getEPAdministrator(), new BallPossIntervalListener());
+		// PositionStatement positionStatement = new PositionStatement(
+		// epService.getEPAdministrator(), new PositionListener());
+		// PlayerLocationStatement playerLocationStatement = new
+		// PlayerLocationStatement(
+		// epService.getEPAdministrator(), new PlayerLocationListener());
+		// RelevantPositionStatement relevantPositionStatement = new
+		// RelevantPositionStatement(
+		// epService.getEPAdministrator(), new RelevantPositionListener());
+		// BallContactStatement ballContactStatement = new BallContactStatement(
+		// epService.getEPAdministrator(), new BallContactListener());
+		// ContactStatement contactStatement = new ContactStatement(
+		// epService.getEPAdministrator(), new ContactListener());
+		// PauseIntervalStatement pauseIntervalStatement = new
+		// PauseIntervalStatement(
+		// epService.getEPAdministrator(), new PauseIntervalListener());
+		// NotInGameStatement notInGameStatement = new NotInGameStatement(
+		// epService.getEPAdministrator(), new NotInGameListener());
 
-		 new PlayerBallPossStatement(epService.getEPAdministrator(), new PlayerBallPossListener());
+		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
+				epService.getEPAdministrator(), new FileListener(
+						"output_Q1.txt"));
 
-		 new TeamBallPossessionStatement(epService.getEPAdministrator(), new TeamBallPossessionListener());
+		DataFileParser df = new DataFileParser();
+		Event currentEvent = df.createNewEvent();
+		while (currentEvent != null) {
+			epService.getEPRuntime().sendEvent(currentEvent);
+			currentEvent = df.createNewEvent();
+		}
 
-			PositionStatement positionStatement = new PositionStatement(
-					epService.getEPAdministrator(), new PositionListener());
-			PlayerLocationStatement playerLocationStatement = new PlayerLocationStatement(
-					epService.getEPAdministrator(),
-					new PlayerLocationListener());
-			RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
-					epService.getEPAdministrator(),
-					new RelevantPositionListener());
-			BallContactStatement ballContactStatement = new BallContactStatement(
-					epService.getEPAdministrator(),
-					new BallContactListener());
-			ContactStatement contactStatement = new ContactStatement(
-					epService.getEPAdministrator(), new ContactListener());
-			PauseIntervalStatement pauseIntervalStatement = new PauseIntervalStatement(
-					epService.getEPAdministrator(),
-					new PauseIntervalListener());
-			NotInGameStatement notInGameStatement = new NotInGameStatement(
-					epService.getEPAdministrator(), new NotInGameListener());
-
-		 DataFileParser df = new DataFileParser();
-		 Event currentEvent = df.createNewEvent();
-		 while (currentEvent != null)
-		 {
-		 epService.getEPRuntime().sendEvent(currentEvent);
-		 currentEvent = df.createNewEvent();
-		 }
-		
 	}
-	
-	public static void main(String[] args)
-	  {
-	    OutputStream output = null;
-	    try
-	    {
-	      output = new FileOutputStream("output.txt");
-	    }
-	    catch (FileNotFoundException e)
-	    {
-	      e.printStackTrace();
-	    }
-	    PrintStream printOut = new PrintStream(output);
-//	    System.setOut(printOut);
-	    
-	    new InitializeQueries().initialize();
-	  }
-	
+
+	public static void main(String[] args) {
+		OutputStream output = null;
+		try {
+			output = new FileOutputStream("output.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		PrintStream printOut = new PrintStream(output);
+		// System.setOut(printOut);
+
+		new InitializeQueries().initialize();
+	}
 
 }
