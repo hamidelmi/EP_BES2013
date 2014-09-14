@@ -19,9 +19,7 @@ public class BallPossIntervalStatement {
 				  + "1 as hit  from pattern "
 				  + "[every ( ContactEventA = PlayerBallContactEvent -> "
 				  + " ContactEventB = PlayerBallContactEvent( ContactEventA.palyerName != ContactEventB.palyerName "
-				  + " and eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) != 0 "
-				  + " and eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) "
-				  + " = eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) ))]";
+				  + " and eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) != 0 ))]";
 
 		  String stmt_2 = " insert into BallPossIntervalEvent "
 		  		+ "select OutOfPlay.ts as ts, ContactEventA.palyerName as palyerName, "

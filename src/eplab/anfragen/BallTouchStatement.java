@@ -11,23 +11,17 @@ public class BallTouchStatement {
 	public BallTouchStatement(EPAdministrator epAdministrator, UpdateListener listener) {
 		String query = "insert into BallTouchEvent "
 						+ "select BallEventA.ts as ts, BallEventA.sid as ballId, "
-//						+ "BallEventA.timeInGame as timeInGame,  "
 						+ "BallEventA.x as x, "
 						+ "BallEventA.y as y, BallEventA.z as z, BallEventA.vx as vx, "
 						+ "BallEventA.vy as vy, BallEventA.vz as vz, BallEventA.ax as ax, "
 						+ "BallEventA.ay as ay, BallEventA.az as az, BallEventA.abs_v as abs_v, "
 						+ "(BallEventA.abs_a / 1000000) as abs_a, "
 						+ "(BallEventB.abs_a / 1000000) as abs_b "
-//						+ "from ValidPositionEvent BallEventA "
-//						+ "where eplab.anfragen.Game.isBall(sid) = true "
-//						+ "and Math.abs(abs_a)/ 1000000 > 55";
 						+ "from pattern [every ( BallEventA = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true "
 						+ "and Math.abs(abs_a)/ 1000000 > 55) -> "
 						+ " BallEventB = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true and "
 						+ "BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
 		
-    	// eplab.anfragen.Game.isBall(sid) = true
-		//sid in ( '4', '8', '10', '12')
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);
 		

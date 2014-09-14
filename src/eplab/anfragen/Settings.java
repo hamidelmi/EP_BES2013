@@ -13,6 +13,8 @@ public class Settings
 	public static String dataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\full-game"; 
 	public static String metadataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\metadata.txt";
 	public static String matchIntervalFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\referee-events\\GameInterruption\\full_game.csv";
+	public static String playersPossOutPath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\output\\";
+
 //=======
 //	public static String dataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\full-game.txt"; 
 //	public static String metadataFilePath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\metadata.txt";

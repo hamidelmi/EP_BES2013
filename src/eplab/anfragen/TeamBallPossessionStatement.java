@@ -27,10 +27,8 @@ public class TeamBallPossessionStatement {
 				+ " case  when EventA.teamId='teamB' then EventA.time"
 				+ "       	when EventB.teamId='teamB' then EventB.time end as timeB, "
 				+ " (EventA.time/(EventA.time + EventB.time))*100 as time_precent"
-//				+ " (sum(time)/ debs13.challenge.game.Game.GetTimeInGame(ts))*100.0 as time_precent "
-//				+ " from BallPossIntervalEvent.win:time(5 minutes) "
 				+ " from pattern [ every ( EventA = TeamBallPossIntervalEvent   -> "
-				+ " EventB = TeamBallPossIntervalEvent ( EventA.teamId != EventB.teamId))]";
+				+ " EventB = TeamBallPossIntervalEvent ( EventA.teamId != EventB.teamId))].win:ext_timed(EventA.ts, 5 min)";
 //				+ " group by EventA.teamId ";
 
 		this.epStatement2 = epAdministrator.createEPL(query);

@@ -16,11 +16,8 @@ public class NewPostionStatement {
 						+ "RawPos.ax as ax, RawPos.ay as ay, RawPos.az as az, "
 						+ "RawPos.abs_v as abs_v, RawPos.abs_a as abs_a, "
 						+ "eplab.anfragen.Game.getPlayerName(RawPos.sid) as playerName, " 
-//						+ "Player.name as name, "
 						+ "eplab.anfragen.Game.StatusInField(RawPos.x,RawPos.y,RawPos.z) as PosInField"
-//						+ "debs13.challenge.game.Game.GetTimeInGame(RawPos.ts) as timeInGame"
 						+ " from PositionEvent RawPos ";
-//						+ "method:eplab.anfragen.Game.getPlayerIndex(RawPos.sid) Player ";
     	
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);

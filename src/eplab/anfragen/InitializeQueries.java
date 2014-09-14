@@ -28,8 +28,8 @@ import com.espertech.esper.client.EPServiceProviderManager;
 public class InitializeQueries {
 
 	public void initialize() {
-		GameIntervals gameIntervals = new GameIntervals();
-		gameIntervals.ParseGameInterruptionsFile(Settings.matchIntervalFilePath);
+//		GameIntervals gameIntervals = new GameIntervals();
+//		gameIntervals.ParseGameInterruptionsFile(Settings.matchIntervalFilePath);
 		new Game();
 		
 		Configuration configuration = new Configuration();

@@ -16,15 +16,13 @@ public class PlayerBallPossListener implements UpdateListener {
 		}
 		for (EventBean theEvent : newEvents) {
 			
-//			System.out.println("Player "+ theEvent.get("palyerName") +" -----------------ball possession aggregated for player:"
-//					+ theEvent.getUnderlying());
-			String myPath = "E:\\TUD\\TUD_Study\\Event Processing\\LAB\\output\\";
 			try {
-			    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(myPath+theEvent.get("palyerName").toString(), true)));
+			    PrintWriter out = new PrintWriter(new BufferedWriter
+			    		(new FileWriter(eplab.anfragen.Settings.playersPossOutPath+theEvent
+			    				.get("palyerName").toString(), true)));
 			    out.println(theEvent.getUnderlying());
 			    out.close();
 			} catch (IOException e) {
-			    //exception handling left as an exercise for the reader
 			}
 		}
 	}

@@ -10,7 +10,6 @@ public class BallContactStatement {
 	public BallContactStatement(EPAdministrator admin, UpdateListener listener) {
 		String query = "insert into BallContactEvent  "
 				+ "select BallEventA.ts as ts, BallEventA.sid as ballId, "
-				//+ "BallEventA.timeInGame as timeInGame, "
 				+ "BallEventA.x as x, BallEventA.y as y, BallEventA.z as z, BallEventA.vx as vx, "
 				+ "BallEventA.vy as vy, BallEventA.vz as vz, BallEventA.ax as ax, BallEventA.ay as ay, BallEventA.az as az, "
 				+ "BallEventA.abs_v as abs_v, (BallEventA.abs_a / 1000000) as abs_a, (BallEventB.abs_a / 1000000) as abs_b, "

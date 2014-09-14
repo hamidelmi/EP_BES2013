@@ -16,7 +16,6 @@ public class PlayerBallContactStatement {
 						+ "win.vx as player_vx, win.vy as player_vy, win.vz as player_vz, "
 						+ "win.ts as player_ts,  "
 						+ "ball.ballId as ball_id, ball.ts as ball_ts, "
-//						+ "ball.shotongoal as shotongoal,"
 						+ "eplab.anfragen.Game.GetEuclideanDistance(win.x , win.y , win.z , ball.x , ball.y , ball.z) as distance "
 						+ "from PlayerWindow as win where "
 						+ "eplab.anfragen.Game.GetEuclideanDistance(win.x , win.y , win.z , ball.x , ball.y , ball.z) < 10000 "
