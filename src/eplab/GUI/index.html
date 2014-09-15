@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="d3.min.js"></script>
+
+<title>Event Processing Query 3 Result Display</title>
+<link type="text/css" rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<select onchange="onWindowChange(event);">
+    <option value="10000" selected="true">10sec</option>
+    <option value="60000">1min</option>
+    <option value="300000">5min</option>
+    <option value="600000">10min</option>
+</select> Window Time
+
+<button onclick="onStartUpdate();">Start Update</button>
+<button onclick="onStopUpdate();">Stop Update</button>
+<div id="plots">
+  <div id="heatchartContainer">
+     <div id="heatchart"></div>
+   </div>
+   
+   <div id="heatchartdataContainer">
+   	<div id="heatchartdata"></div>
+   </div>
+</div>
+    
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
