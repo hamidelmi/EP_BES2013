@@ -25,12 +25,12 @@ public class InitializeQueries {
 
 	public void initialize() {
 		
-		//new Game();
+		new Game();
 		
 		Configuration configuration = new Configuration();
 //		configuration.getEngineDefaults().getThreading().setInternalTimerEnabled(false);
 		
-		configuration.addEventType("PositionEvent", Event.class.getName());
+		configuration.addEventType("Event", Event.class.getName());
 		
 		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(configuration);
 		
@@ -43,7 +43,11 @@ public class InitializeQueries {
 		
 		new HeatMapDeltaPositionStatement(epService.getEPAdministrator(), new HeatMapDeltaPositionListener());
 		
-		new AccumulativeHeatMapStatement(epService.getEPAdministrator());
+		new AccumulativeHeatMapStatement(epService.getEPAdministrator(), new AccumulativeHeatMapListener(), 10000);
+		new AccumulativeHeatMapStatement(epService.getEPAdministrator(), new AccumulativeHeatMapListener(), 60000);
+		new AccumulativeHeatMapStatement(epService.getEPAdministrator(), new AccumulativeHeatMapListener(), 300000);
+		new AccumulativeHeatMapStatement(epService.getEPAdministrator(), new AccumulativeHeatMapListener(), 600000);
+		
 		
 		DataFileParser df = new DataFileParser();
 		Event currentEvent = df.createNewEvent();
@@ -57,7 +61,7 @@ public class InitializeQueries {
 	
 	public static void main(String[] args)
 	  {
-	    OutputStream output = null;
+	    /*OutputStream output = null;
 	    try
 	    {
 	      output = new FileOutputStream("output.txt");
@@ -68,7 +72,7 @@ public class InitializeQueries {
 	    }
 	    PrintStream printOut = new PrintStream(output);
 	    System.setOut(printOut);
-	    
+	    */
 	    new InitializeQueries().initialize();
 	  }
 	

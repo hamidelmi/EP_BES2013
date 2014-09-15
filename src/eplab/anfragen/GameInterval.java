@@ -184,7 +184,7 @@ public class GameInterval
         return false;
       }
     }
-    System.out.println("ParseGameInterruptionFiles");
+    //System.out.println("ParseGameInterruptionFiles");
     return true;
   }
   
@@ -195,13 +195,14 @@ public class GameInterval
     while (it.hasNext())
     {
       GameInterval activeInterval = (GameInterval)it.next();
-      System.out.println(activeInterval.iEventId + " " + activeInterval.iHalf + " " + activeInterval.dInrevalStratTime + " " + activeInterval.dInrevalEndTime + " " + activeInterval.dTotalTime);
+      System.out.println(activeInterval.intervalIndex + " " + activeInterval.iEventId + " " + activeInterval.iHalf + " " + activeInterval.dInrevalStratTime + " " + activeInterval.dInrevalEndTime + " " + activeInterval.dTotalTime);
     }
   }
   
   public boolean moveToActiveInterval(double currTs)
   {
-    while (currTs > ((GameInterval)this.IntervalsVector.get(this.intervalIndex)).dInrevalEndTime) {
+	  this.intervalIndex = 0;
+	  while (currTs > ((GameInterval)this.IntervalsVector.get(this.intervalIndex)).dInrevalEndTime) {
       if (this.IntervalsVector.size() - 1 > this.intervalIndex)
       {
         this.currGameTime = ((GameInterval)this.IntervalsVector.get(this.intervalIndex)).dTotalTime;
@@ -248,6 +249,6 @@ public class GameInterval
     
     gi.printGameInterruption();
     
-    System.out.println("time in game :" + gi.getCurrGameTime(179.08000000000001D));
+    System.out.println("Time in game :" + gi.getCurrGameTime(179.08000000000001D));
   }
 }

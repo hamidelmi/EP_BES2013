@@ -7,7 +7,7 @@ package eplab.anfragen;
  */
 
 import eplab.anfragen.GameInterval;
-import eplab.bodenobjekte.Intensitiy;
+import eplab.anfragen.Settings;
 import eplab.bodenobjekte.*;
 
 import java.util.ArrayList;
@@ -179,7 +179,14 @@ public class Game {
 	
 	public static double GetTimeInGame(long ts)
 	{
-		double x = oGameInterval.getCurrGameTime(ElapsedSecondsFromStart(ts));
+		if (!oGameInterval.ParseGameInterruptionsFile(Settings.sPathToInterruptionPath))
+	    {
+	      System.out.println("Error in ParseGameInterruptionsFile(sPathToInterruptionPath)");
+	      System.exit(0);
+	    }
+		//oGameInterval.printGameInterruption();
+		double currts = ElapsedSecondsFromStart(ts);
+		double x = oGameInterval.getCurrGameTime(currts);
 		return x;
 	}
 	
