@@ -34,11 +34,6 @@ public class InitializeQueries {
 		
 		EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider(configuration);
 		
-		//new PositionStatement(epService.getEPAdministrator());
-		//enPosEventStmt.addListener(new PositionListener());
-		
-		//new PlayerPositionStatement(epService.getEPAdministrator(), new PlayerPositionListener());
-		
 		new HeatPositionStatement(epService.getEPAdministrator(), new HeatPositionListener());
 		
 		new HeatMapDeltaPositionStatement(epService.getEPAdministrator(), new HeatMapDeltaPositionListener());
@@ -55,24 +50,11 @@ public class InitializeQueries {
 		 {
 		 epService.getEPRuntime().sendEvent(currentEvent);
 		 currentEvent = df.createNewEvent();
-		 }
-		
+		 }	
 	}
 	
 	public static void main(String[] args)
 	  {
-	    /*OutputStream output = null;
-	    try
-	    {
-	      output = new FileOutputStream("output.txt");
-	    }
-	    catch (FileNotFoundException e)
-	    {
-	      e.printStackTrace();
-	    }
-	    PrintStream printOut = new PrintStream(output);
-	    System.setOut(printOut);
-	    */
 	    new InitializeQueries().initialize();
 	  }
 	

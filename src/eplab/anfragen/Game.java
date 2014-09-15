@@ -9,10 +9,19 @@ package eplab.anfragen;
 import eplab.anfragen.GameInterval;
 import eplab.anfragen.Settings;
 import eplab.bodenobjekte.*;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 
 public class Game {
 	private static Game instance;
@@ -131,7 +140,53 @@ public class Game {
 		}
 		return null;
 	}
+public static String getPlayerName(int sensorId) {
+		// int x = Integer.parseInt(sensorId);
+		int x = sensorId;
+		// if(x == 105 || x == 106 )
+		// {return "Refree";}
+		// else if (x == 4 || x == 8 || x == 10 || x == 12)
+		// { return "Ball"; }
+		//
+		for (int i = 0; i < teamA.players.size(); i++) {
+			if (teamA.players.get(i).hasSensorId(x)) {
+				return teamA.players.get(i).name;
+			} else {
+				continue;
+			}
 
+		}
+		for (int i = 0; i < teamB.players.size(); i++) {
+			if (teamB.players.get(i).hasSensorId(x)) {
+				return teamB.players.get(i).name;
+			} else {
+				continue;
+			}
+		}
+
+		return null;
+
+	}
+
+	public static String getTeam(String playerName) {
+
+		for (int i = 0; i < teamB.players.size(); i++) {
+			if (teamB.players.get(i).getName().equals(playerName)) {
+				return "teamB";
+			} else {
+				continue;
+			}
+		}
+		for (int i = 0; i < teamA.players.size(); i++) {
+			if (teamA.players.get(i).getName().equals(playerName)) {
+				return "teamA";
+			} else {
+				continue;
+			}
+		}
+
+		return null;
+	}
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
 	}
@@ -153,15 +208,6 @@ public class Game {
 			return Intensitiy.Sprint;
 	}
 	
-	public static int GetFiledWidth()
-	{
-		return rightField - leftField;
-	}
-
-	public static int GetFiledHeight()
-	{
-		return topField - bottomField;
-	}
 	
 	public static int StatusInField(long x, long y, long z)
 	{
@@ -175,6 +221,109 @@ public class Game {
 			return 2;
 		}
 		return 0;
+	}
+	public static long GetEuclideanDistance(int x1, int y1, int z1, int x2,
+			int y2, int z2) {
+		double a = Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
+				+ Math.pow(z2 - z1, 2.0D);
+
+		double d = Math.sqrt(a);
+
+		return (long) d;
+	}
+	
+	public static int getGameHalf(long ts) {
+		if (ts < tsStartFirstHalf)
+			return 0;
+		else if (ts >= tsStartFirstHalf && ts <= tsEndFirstHalf)
+			return 1;
+		else if (ts >= tsStartSecondHalf && ts <= tsEndSecondHalf)
+			return 2;
+		else if (Objects.toString(ts, null).matches("12398.*"))
+			return 0;
+
+		return 0;
+	}
+
+	public static boolean isValidInterval(double ts) throws IOException {
+
+		int y;
+		long gameHalf = 0;
+		;
+		if (initTsArray == 0) {
+			BufferedReader br = new BufferedReader(new FileReader(
+					Settings.matchIntervalFilePath));
+			String[] splitLine = null;
+			String splitString = null;
+
+			while ((splitString = br.readLine()) != null) {
+				splitLine = splitString.toString().split(";");
+				if (splitLine[0].startsWith("20")) {
+					gameHalf = tsStartFirstHalf;
+				} else
+					gameHalf = tsStartSecondHalf;
+				if (splitLine[1].split(" ")[2].equals("Begin")) {
+					beginTS.add(convertStringtoMilliSec(splitLine[2], gameHalf));
+				} else {
+					endTS.add(convertStringtoMilliSec(splitLine[2], gameHalf));
+				}
+			}
+			br.close();
+			initTsArray = 1;
+		}
+
+		for (Double s : beginTS) {
+			Double db = new Double(ts);
+			db = db * Math.pow(10.0D, -12.0D);
+			if (db.compareTo(s) <= 0) {
+				y = beginTS.indexOf(s) - 1;
+				if (db.compareTo(endTS.get(y)) <= 0) {
+					return true;
+				} else
+					return false;
+			}
+		}
+		return false;
+
+	}
+
+	public static double convertStringtoMilliSec(String currTime, long gameHalf) {
+		String sTimeStampFormat = "hh:mm:ss.SSS";
+		SimpleDateFormat intervalTimeFormat = new SimpleDateFormat(
+				sTimeStampFormat);
+		Calendar baseCal = new GregorianCalendar();
+
+		try {
+			baseCal.setTime(intervalTimeFormat.parse("00:00:00.000"));
+			Date parsedDate = intervalTimeFormat.parse(currTime);
+			Calendar tmpCal = new GregorianCalendar();
+			tmpCal.setTime(parsedDate);
+
+			// double x = tmpCal.getTimeInMillis();
+			// double y = baseCal.getTimeInMillis();
+
+			return (parsedDate.getTime() - baseCal.getTimeInMillis())
+					* Math.pow(10D, -3.0D) + gameHalf * Math.pow(10D, -12D);
+
+		} catch (Exception e) {
+			// System.out.println("error converting ts to pico seconds");
+			return 0L;
+		}
+
+	}
+
+	public static boolean isBall(int sensorId) {
+		int[] ballSid = new int[] { 4, 8, 10, 12 };
+		for (int x = 0; x < ballSid.length; x++) {
+			if (ballSid[x] == sensorId)
+				return true;
+		}
+		// if (Arrays.asList(ballSid).contains(Integer.parseInt(sensorId)))
+		// return true;
+		// else
+		// return false;
+
+		return false;
 	}
 	
 	public static double GetTimeInGame(long ts)
@@ -219,16 +368,13 @@ public class Game {
 	  return new Double(seconds);
 	}
 	
-	public static String getPlayerName(String sensorId) {
-		String x = null;
-		for (int i = 0; i < teamA.players.size(); i++)
-			if (teamA.players.get(i).hasSensorId(Integer.parseInt(sensorId))) {
-				x = teamA.players.get(i).name;
-				return x;
-			} else if (teamB.players.get(i).hasSensorId(Integer.parseInt(sensorId))) {
-				x = teamB.players.get(i).name;
-				return x;
-			}
-		return null;
+	public static int GetFiledWidth()
+	{
+		return rightField - leftField;
+	}
+
+	public static int GetFiledHeight()
+	{
+		return topField - bottomField;
 	}
 }

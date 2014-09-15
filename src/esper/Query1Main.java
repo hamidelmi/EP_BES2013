@@ -8,13 +8,13 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 
-import epdebs.game_objects.Game;
-import epdebs.parser.DataFileParser;
-import epdebs.parser.Event;
-import epdebs.parser.Settings;
 import eplab.anfragen.AccumulativeIntensityStatement;
+import eplab.anfragen.DataFileParser;
 import eplab.anfragen.EchoListener;
-import eplab.anfragen.IntensityStatement;
+import eplab.anfragen.FileListener;
+import eplab.anfragen.Game;
+import eplab.anfragen.Settings;
+import eplab.bodenobjekte.Event;
 
 public class Query1Main {
 
@@ -36,11 +36,8 @@ public class Query1Main {
 				"myCEPEngine", cepConfig);
 		EPRuntime cepRT = cep.getEPRuntime();
 		EPAdministrator cepAdm = cep.getEPAdministrator();
-		IntensityStatement intensityStatement = new IntensityStatement(cepAdm,
-				null);
-
 		AccumulativeIntensityStatement accumulativeIntensityStatement = new AccumulativeIntensityStatement(
-				cepAdm, new EchoListener());
+				cepAdm, new FileListener("c:\1.txt"));
 
 		DataFileParser parser = new DataFileParser();
 		Game game = Game.Singleton();
@@ -48,8 +45,9 @@ public class Query1Main {
 		Event curPosEvent = parser.createNewEvent();
 
 		int c = 0;
-		while (curPosEvent != null && c++ < 10) {
-			cep.getEPRuntime().sendEvent(curPosEvent);
+		while (curPosEvent != null && c++ < 10000000) {
+			if (curPosEvent.getsid() == 59 || curPosEvent.getsid() == 28)
+				cep.getEPRuntime().sendEvent(curPosEvent);
 
 			curPosEvent = parser.createNewEvent();
 		}
