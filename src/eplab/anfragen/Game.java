@@ -34,10 +34,13 @@ public class Game {
 	protected static int leftField = 0;
 	protected static int topField = 33960;
 	protected static int rightField = 52483;
-	protected static long tsGameStartFirstHalf = Long.parseLong("10753295594424116");
-	protected static long tsGameEndFirstHalf = Long.parseLong("12557295594424116");
-	protected static long tsGameStartSecondHalf = Long.parseLong("13086639146403495");
-	protected static long tsGameEndSecondHalf = Long.parseLong("14879639146403495");
+	protected static long tsStartFirstHalf = Long.parseLong("10753295594424116");
+	protected static long tsEndFirstHalf = Long.parseLong("12557295594424116");
+	protected static long tsStartSecondHalf = Long.parseLong("13086639146403495");
+	protected static long tsEndSecondHalf = Long.parseLong("14879639146403495");
+	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
+ 	protected static ArrayList<Double> endTS = new ArrayList<Double>();
+ 	protected static int initTsArray = 0;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -343,20 +346,20 @@ public static String getPlayerName(int sensorId) {
 	{
 		int gameHalf = CurrentGameHalf(ts);
 	    if (gameHalf == 1) {
-	      return ElapsedSeconds(tsGameStartFirstHalf, ts).doubleValue();
+	      return ElapsedSeconds(tsStartFirstHalf, ts).doubleValue();
 	    }
 	    if (gameHalf == 2) {
-	    return ElapsedSeconds(tsGameStartSecondHalf, ts).doubleValue();
+	    return ElapsedSeconds(tsStartSecondHalf, ts).doubleValue();
 	    }
 	    	return 0.0D;
 	}
 	
 	public static int CurrentGameHalf(long ts)
 	{
-	  if ((ts >= tsGameStartFirstHalf) && (ts <= tsGameEndFirstHalf)) {
+	  if ((ts >= tsStartFirstHalf) && (ts <= tsEndFirstHalf)) {
 	    return 1;
 	  }
-	  if ((ts >= tsGameStartSecondHalf) && (ts <= tsGameEndSecondHalf)) {
+	  if ((ts >= tsStartSecondHalf) && (ts <= tsEndSecondHalf)) {
 	    return 2;
 	  }
 	  return -1;
