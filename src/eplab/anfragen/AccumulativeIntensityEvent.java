@@ -1,21 +1,20 @@
 package eplab.anfragen;
 
+
 public class AccumulativeIntensityEvent {
-	private int minutes;
 	private long ts_start;
 	private long ts_stop;
-	private String player_id;
+	private int player_id;
 	private int intensity;
 	private long distance;
 	private long speed;
+	
+	public String toString()
+	  {
+	    String sEventString = this.getTs_start() + "," + this.getTs_stop() + "," + this.getPlayer_id() + "," + this.getIntensity() + "," + this.getDistance() + "," + this.getSpeed();
 
-	public String toString() {
-		String sEventString = this.getTs_start() + "," + this.getTs_stop()
-				+ "," + this.getPlayer_id() + "," + this.getIntensity() + ","
-				+ this.getDistance() + "," + this.getSpeed();
-
-		return sEventString;
-	}
+	    return sEventString;
+	  }
 
 	public long getTs_start() {
 		return ts_start;
@@ -31,14 +30,13 @@ public class AccumulativeIntensityEvent {
 
 	public void setTs_stop(long ts_stop) {
 		this.ts_stop = ts_stop;
-		this.minutes = (int) (AccumulativeIntensity.TimeToSecond(ts_stop) / 60);
 	}
 
-	public String getPlayer_id() {
+	public int getPlayer_id() {
 		return player_id;
 	}
 
-	public void setPlayer_id(String player_id) {
+	public void setPlayer_id(int player_id) {
 		this.player_id = player_id;
 	}
 
@@ -64,13 +62,5 @@ public class AccumulativeIntensityEvent {
 
 	public void setSpeed(long speed) {
 		this.speed = speed;
-	}
-
-	public int getMinutes1() {
-		return minutes;
-	}
-
-	public void setMinutes1(int minute) {
-		this.minutes = minute;
 	}
 }

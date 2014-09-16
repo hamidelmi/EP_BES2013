@@ -1,3 +1,4 @@
+
 package eplab.anfragen;
 
 import com.espertech.esper.client.EPAdministrator;
@@ -28,3 +29,4 @@ public class BallTouchStatement {
 	}
 	
 }
+

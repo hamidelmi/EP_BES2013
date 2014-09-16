@@ -1,3 +1,4 @@
+
 package eplab.anfragen;
 
 public class Settings 
@@ -7,6 +8,13 @@ public class Settings
 //	public static String metadataFilePath = "D:\\Courses\\Event processing\\Add on\\metadata.txt";
 //	public static String matchIntervalFilePath = "D:\\Courses\\Event processing\\Add on\\full_game.csv";
 	//..................//
+
+	//Samir local settings//
+//	public static String dataFilePath = "C:\\Users\\SAMIR SAHU\\Downloads\\full-game.info"; 
+	public static String sPathToInterruptionPath = "C:\\Users\\SAMIR SAHU\\Documents\\referee-events\\Game Interruption";
+//	public static String metadataFilePath = "C:\\Users\\SAMIR SAHU\\Downloads\\metadata.txt";
+//	public static String matchInfoFilePath = "C:\\Users\\SAMIR SAHU\\Downloads\\referee-events.tar.gz";
+//	public static String OutputPath = "C:\\Users\\SAMIR SAHU\\Downloads\\Output\\";
 
 	//Arun local settings//
 //<<<<<<< HEAD

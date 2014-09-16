@@ -1,7 +1,7 @@
 package eplab.bodenobjekte;
 
 public class Event {
-	int sid;
+	String sid;
 	long ts;
 	int x;
 	int y;
@@ -15,7 +15,7 @@ public class Event {
 	int ay;
 	int az;
 
-	public int getsid() {
+	public String getsid() {
 		return this.sid;
 	}
 
@@ -67,8 +67,9 @@ public class Event {
 		return this.az;
 	}
 
-	public Event(int sid, long ts, int x, int y, int z, int abs_v, int vx,
-			int vy, int vz, int abs_a, int ax, int ay, int az) {
+	public Event(String sid, long ts, int x, int y, int z, int abs_v, int vx,
+			int vy, int vz, int abs_a, int ax, int ay, int az) 
+	{
 		this.sid = sid;
 		this.ts = ts;
 		this.x = x;
@@ -84,11 +85,22 @@ public class Event {
 		this.az = az;
 	}
 
-	public String toString() {
-		return this.sid + "," + this.ts + "," + this.x + "," + this.y + ","
-				+ this.z + "," + this.abs_v + "," + this.vx + "," + this.vy
-				+ "," + this.vz + "," + this.abs_a + "," + this.ax + ","
-				+ this.ay + "," + this.az;
+	public String toString() 
+	{
+		return
+		this.sid + "," 
+		+ this.ts + "," 
+		+ this.x + "," 
+		+ this.y + ","
+		+ this.z + "," 
+		+ this.abs_v + "," 
+		+ this.vx + "," 
+		+ this.vy + "," 
+		+ this.vz + "," 
+		+ this.abs_a + "," 
+		+ this.ax + ","
+		+ this.ay + "," 
+		+ this.az;
 	}
 
 }

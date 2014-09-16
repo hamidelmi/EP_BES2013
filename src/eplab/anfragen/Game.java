@@ -5,8 +5,10 @@ package eplab.anfragen;
  * Also it holds all the utility functions needed in all queries 
  * 
  */
-import eplab.bodenobjekte.*;
 
+import eplab.anfragen.GameInterval;
+import eplab.anfragen.Settings;
+import eplab.bodenobjekte.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,26 +22,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Game {
 	private static Game instance;
 	protected static Team teamA, teamB;
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
-
+	protected static GameInterval oGameInterval = new GameInterval();
 	protected static int bottomField = -33960;
 	protected static int leftField = 0;
 	protected static int topField = 33960;
 	protected static int rightField = 52483;
-	protected static long tsStartFirstHalf = Long
-			.parseLong("10753295594424116");
+	protected static long tsStartFirstHalf = Long.parseLong("10753295594424116");
 	protected static long tsEndFirstHalf = Long.parseLong("12557295594424116");
-	protected static long tsStartSecondHalf = Long
-			.parseLong("13086639146403495");
+	protected static long tsStartSecondHalf = Long.parseLong("13086639146403495");
 	protected static long tsEndSecondHalf = Long.parseLong("14879639146403495");
 	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
-	protected static ArrayList<Double> endTS = new ArrayList<Double>();
-	protected static int initTsArray = 0;
+ 	protected static ArrayList<Double> endTS = new ArrayList<Double>();
+ 	protected static int initTsArray = 0;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -142,8 +143,7 @@ public class Game {
 		}
 		return null;
 	}
-
-	public static String getPlayerName(int sensorId) {
+public static String getPlayerName(int sensorId) {
 		// int x = Integer.parseInt(sensorId);
 		int x = sensorId;
 		// if(x == 105 || x == 106 )
@@ -190,7 +190,6 @@ public class Game {
 
 		return null;
 	}
-
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
 	}
@@ -211,23 +210,21 @@ public class Game {
 		else
 			return Intensitiy.Sprint;
 	}
-
-	public static String StatusInField(long x, long y, long z) {
-		if ((x < leftField) || (x > rightField) || (y > topField)
-				|| (y < bottomField)) {
-			return "-1";
+	
+	
+	public static int StatusInField(long x, long y, long z)
+	{
+		if ((x < leftField) || (x > rightField) || (y > topField) || (y < bottomField)) {
+			return -1;
 		}
-		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D)
-				&& (z < 2440.0D)) {
-			return "1";
+		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D) && (z < 2440.0D)) {
+			return 1;
 		}
-		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
-				&& (z < 2440.0D)) {
-			return "2";
+		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D) && (z < 2440.0D)) {
+			return 2;
 		}
-		return "0";
+		return 0;
 	}
-
 	public static long GetEuclideanDistance(int x1, int y1, int z1, int x2,
 			int y2, int z2) {
 		double a = Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
@@ -237,7 +234,7 @@ public class Game {
 
 		return (long) d;
 	}
-
+	
 	public static int getGameHalf(long ts) {
 		if (ts < tsStartFirstHalf)
 			return 0;
@@ -330,5 +327,57 @@ public class Game {
 		// return false;
 
 		return false;
+	}
+	
+	public static double GetTimeInGame(long ts)
+	{
+		if (!oGameInterval.ParseGameInterruptionsFile(Settings.sPathToInterruptionPath))
+	    {
+	      System.out.println("Error in ParseGameInterruptionsFile(sPathToInterruptionPath)");
+	      System.exit(0);
+	    }
+		//oGameInterval.printGameInterruption();
+		double currts = ElapsedSecondsFromStart(ts);
+		double x = oGameInterval.getCurrGameTime(currts);
+		return x;
+	}
+	
+	public static double ElapsedSecondsFromStart(long ts)
+	{
+		int gameHalf = CurrentGameHalf(ts);
+	    if (gameHalf == 1) {
+	      return ElapsedSeconds(tsStartFirstHalf, ts).doubleValue();
+	    }
+	    if (gameHalf == 2) {
+	    return ElapsedSeconds(tsStartSecondHalf, ts).doubleValue();
+	    }
+	    	return 0.0D;
+	}
+	
+	public static int CurrentGameHalf(long ts)
+	{
+	  if ((ts >= tsStartFirstHalf) && (ts <= tsEndFirstHalf)) {
+	    return 1;
+	  }
+	  if ((ts >= tsStartSecondHalf) && (ts <= tsEndSecondHalf)) {
+	    return 2;
+	  }
+	  return -1;
+	}
+	
+	public static Double ElapsedSeconds(long tsStart, long tsEnd)
+	{
+	  double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
+	  return new Double(seconds);
+	}
+	
+	public static int GetFiledWidth()
+	{
+		return rightField - leftField;
+	}
+
+	public static int GetFiledHeight()
+	{
+		return topField - bottomField;
 	}
 }
