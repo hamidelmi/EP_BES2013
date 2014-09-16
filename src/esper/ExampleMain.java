@@ -2,6 +2,8 @@ package esper;
 
 import com.espertech.esper.client.*;
 
+import eplab.anfragen.*;
+import eplab.bodenobjekte.*;
 import eplab.anfragen.DataFileParser;
 import eplab.anfragen.Game;
 import eplab.anfragen.Settings;

@@ -11,8 +11,8 @@ public class ContactStatement {
 	public ContactStatement(EPAdministrator epAdministrator,
 			UpdateListener listener) {
 		String query = "on BallContactEvent as ball insert into ContactEvent "
-				+ "select win.playerName as playerName, win.sid as sid, win.x as player_x, win.y as player_y, win.z as player_z, "
-				+ "win.vx as player_vx, win.vy as player_vy, win.vz as player_vz, win.ts as player_ts,  "
+				+ "select win.sid as sid, win.x as player_x, win.y as player_y, win.z as player_z, "
+				+ "win.vx as player_vx, win.vy as player_vy, win.vz as player_vz, win.ts as player_ts "
 				+ "win.getLocation as getLocation, ball.ballId as ball_id, ball.ts as ball_ts, ball.isTowardGoal as isTowardGoal, "
 				+ "eplab.anfragen.Game.GetDistance(win.x ,ball.x, win.y ,ball.y, win.z ,ball.z) as getDistance "
 				+ "from PlayerLocation as win "

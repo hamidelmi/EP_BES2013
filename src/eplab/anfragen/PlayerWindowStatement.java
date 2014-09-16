@@ -11,13 +11,13 @@ public class PlayerWindowStatement {
 	
 	  
 	public PlayerWindowStatement(EPAdministrator epAdministrator) {
-		String query = "create window PlayerWindow.std:unique(name) as PositionEvent";
+		String query = "create window PlayerWindow.std:unique(playerName) as NewPositionEvent";
 	    
 	    this.createwindow = epAdministrator.createEPL(query);
-	    
 
-	    query = "insert into PlayerWindow select * from PositionEvent "
-	    		+ "where eplab.anfragen.Game.getPlayer(sid) != null and PosInField <> -1 ";
+	    query = "insert into PlayerWindow select * from NewPositionEvent "
+	    		+ "where eplab.anfragen.Game.getPlayerName(cast(sid,string)) IS NOT NULL "
+	    		+ "and PosInField <> -1 ";
 	    
 	    this.epStatement = epAdministrator.createEPL(query);
 		

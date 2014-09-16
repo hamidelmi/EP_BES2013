@@ -14,7 +14,7 @@ public class PositionStatement {
 				+ "select eventPosition.sid as sid, eventPosition.ts as ts, eventPosition.x as x, eventPosition.y as y, eventPosition.z as z, "
 				+ "eventPosition.vx as vx, eventPosition.vy as vy, eventPosition.vz as vz, eventPosition.ax as ax, eventPosition.ay as ay, eventPosition.az as az, "
 				+ "eventPosition.abs_v as abs_v, eventPosition.abs_a as abs_a, "
-				+ "eplab.anfragen.Game.GetPlayerName(sid) as playerName, "
+				//+ "eplab.anfragen.Game.GetPlayerName(sid) as playerName, "
 				+ "eplab.anfragen.Game.GetLocation(eventPosition.x,eventPosition.y,eventPosition.z) as getLocation "
 				+ "from Event eventPosition";
 

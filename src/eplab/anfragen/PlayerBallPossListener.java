@@ -1,4 +1,10 @@
+
 package eplab.anfragen;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
@@ -10,8 +16,15 @@ public class PlayerBallPossListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("ball possession aggregated for player:"
-					+ theEvent.getUnderlying());
+			
+			try {
+			    PrintWriter out = new PrintWriter(new BufferedWriter
+			    		(new FileWriter(eplab.anfragen.Settings.playersPossOutPath+theEvent
+			    				.get("playerName").toString(), true)));
+			    out.println(theEvent.getUnderlying());
+			    out.close();
+			} catch (IOException e) {
+			}
 		}
 	}
 }

@@ -31,6 +31,11 @@ public class Game {
 	protected static int leftField = 0;
 	protected static int topField = 33960;
 	protected static int rightField = 52483;
+	protected static long tsStartFirstHalf = Long.parseLong("10753295594424116");
+	protected static long tsEndFirstHalf = Long.parseLong("12557295594424116");
+	protected static long tsStartSecondHalf = Long.parseLong("13086639146403495");
+	protected static long tsEndSecondHalf = Long.parseLong("14879639146403495");
+
 
 	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
 	protected static ArrayList<Double> endTS = new ArrayList<Double>();
@@ -344,6 +349,16 @@ public class Game {
 			}
 		}
 		return null;
+	}
+	
+	public static int GetFiledWidth()
+	{
+		return rightField - leftField;
+	}
+
+	public static int GetFiledHeight()
+	{
+		return topField - bottomField;
 	}
 	
 }

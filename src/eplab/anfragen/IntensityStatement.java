@@ -9,14 +9,16 @@ public class IntensityStatement {
 
 	public IntensityStatement(EPAdministrator admin, UpdateListener listener) {
 
-//		.win:time(5 min)
-		String query = "SELECT e.sid FROM pattern [every e = Event(abs_v<=1) -> (Event(sid = e.sid, abs_v<=1) and not Event(sid = e.sid, abs_v>1))"
-				+ "-> (Event(sid = e.sid, abs_v<=1) and not Event(sid = e.sid, abs_v>1))"
-				+ " where timer:within(5 minutes)] q";
+
+		String query = "INSERT INTO InstantIntensityEvent "
+				+ "SELECT sid, ts, abs_v, " + "CASE WHEN abs_v < "
+				+ SpeedToV(1) + " THEN 0 " + "WHEN abs_v < " + SpeedToV(11)
+				+ " THEN 1" + "WHEN abs_v < " + SpeedToV(13) + " THEN 2"
+				+ "WHEN abs_v < " + SpeedToV(17) + " THEN 3" + "WHEN abs_v < "
+				+ SpeedToV(24) + " THEN 4" + "ELSE 5"
+				+ "END as  InstantIntensity " + "FROM Event";
 
 		this.statement = admin.createEPL(query);
-//		this.statement = admin.createPattern(query);
-	
 		if (listener != null)
 			this.statement.addListener(listener);
 	}

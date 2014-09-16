@@ -7,15 +7,17 @@ import java.io.PrintStream;
 
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
- 
-public class HeatPositionListener implements UpdateListener
+
+public class AccumulativeHeatMapListener implements UpdateListener
 {
+	protected int iSecs = 0;
+	
 	public void update(EventBean[] newEvents, EventBean[] oldEvents)
 	{
 		OutputStream output = null;
 	    try
 	    {
-	      output = new FileOutputStream("C:\\Users\\SAMIR SAHU\\git\\EP_BES2013\\src\\eplab\\GUI\\output.txt",true);
+	      output = new FileOutputStream(Settings.guiOutput+"output_"+ this.iSecs +".txt", false);
 	    }
 	    catch (FileNotFoundException e)
 	    {
@@ -28,7 +30,13 @@ public class HeatPositionListener implements UpdateListener
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("Heat Event received: " + theEvent.getUnderlying());
+			System.out.println(theEvent.getUnderlying());
 		}
 	}
+
+	public void SetSeconds(int iSecs)
+	{
+		this.iSecs = iSecs;
+	}
+
 }
