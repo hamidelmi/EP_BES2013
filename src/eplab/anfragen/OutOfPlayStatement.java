@@ -12,8 +12,8 @@ public class OutOfPlayStatement {
 		String query = "insert into OutOfPlayEvent select Pos.ts as ts, "
 				+ " current_timestamp() from NewPositionEvent Pos "
 				+ "  where ( eplab.anfragen.Game.isValidInterval(Pos.ts) = false )"
-				+ " or ( eplab.anfragen.Game.isBall(sid) = true and "
-				+ " Pos.PosInField = '-1' )";
+				+ " or ( eplab.anfragen.Game.isBall(cast(sid,int)) = true and "
+				+ " Pos.PosInField = -1 )";
 		
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);

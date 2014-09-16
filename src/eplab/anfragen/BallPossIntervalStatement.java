@@ -19,7 +19,9 @@ public class BallPossIntervalStatement {
 				  + "1 as hit  from pattern "
 				  + "[every ( ContactEventA = PlayerBallContactEvent(eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) != 0 ) -> "
 				  + " ContactEventB = PlayerBallContactEvent( ContactEventA.playerName != ContactEventB.playerName "
-				  + " and (eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) != 0) ))]";
+				  + " and (eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts) != 0) and"
+				  + " eplab.anfragen.Game.getGameHalf(ContactEventB.player_ts)"
+				  + " = eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) ))]";
 
 		  String stmt_2 = " insert into BallPossIntervalEvent "
 		  		+ "select OutOfPlay.ts as ts, ContactEventA.playerName as playerName, "
@@ -27,7 +29,9 @@ public class BallPossIntervalStatement {
 		  		+ "eplab.anfragen.Game.getTeam(ContactEventA.playerName) "
 		  		+ "as teamId, OutOfPlay.ts - ContactEventA.player_ts as time, "
 		  		+ "1 as hit  from pattern "
-		  		+ "[every (ContactEventA = PlayerBallContactEvent(eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) != 0 ) -> OutOfPlay = OutOfPlayEvent ) ]";
+		  		+ "[every (ContactEventA = "
+		  		+ "PlayerBallContactEvent(eplab.anfragen.Game.getGameHalf(ContactEventA.player_ts) != 0 )"
+		  		+ " -> OutOfPlay = OutOfPlayEvent ) ]";
 
 		  
 		  

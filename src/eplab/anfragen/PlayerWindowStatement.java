@@ -16,8 +16,8 @@ public class PlayerWindowStatement {
 	    this.createwindow = epAdministrator.createEPL(query);
 
 	    query = "insert into PlayerWindow select * from NewPositionEvent "
-	    		+ "where eplab.anfragen.Game.getPlayerName(sid) IS NOT NULL "
-	    		+ "and PosInField <> '-1' ";
+	    		+ "where eplab.anfragen.Game.getPlayerName(cast(sid,string)) IS NOT NULL "
+	    		+ "and PosInField <> -1 ";
 	    
 	    this.epStatement = epAdministrator.createEPL(query);
 		

@@ -10,8 +10,8 @@ public class BallTouchListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-			System.out.println("ball touch event received at :" + theEvent.get("ts") + ":"
-					+ theEvent.getUnderlying());
+//			System.out.println("ball touch event received at :" + theEvent.get("ts") + ":"
+//					+ theEvent.getUnderlying());
 		}
 	}
 }

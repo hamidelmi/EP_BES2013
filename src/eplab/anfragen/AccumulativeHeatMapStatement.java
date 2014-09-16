@@ -68,7 +68,7 @@ public class AccumulativeHeatMapStatement
 							+ " (sum(dEvent.dts) / " + totaltime + ") * 100.0  as percent_time_in_time_cell "
 							+ " from HeatMapDeltaPositionEvent" + winlength + " as dEvent" 
 							+ " group by playerName, cell_x1, cell_y1, cell_x2, cell_y2" 
-							+ " output last every 1 sec"
+							+ " output last every 1 min"
 							+ " order by playerName";
 
 		return resultString;
