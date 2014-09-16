@@ -17,7 +17,7 @@ public class AccumulativeHeatMapListener implements UpdateListener
 		OutputStream output = null;
 	    try
 	    {
-	      output = new FileOutputStream("C:\\Users\\SAMIR SAHU\\git\\EP_BES2013\\src\\eplab\\GUI\\output_"+ this.iSecs +".txt");
+	      output = new FileOutputStream(Settings.guiOutput+"output_"+ this.iSecs +".txt", false);
 	    }
 	    catch (FileNotFoundException e)
 	    {

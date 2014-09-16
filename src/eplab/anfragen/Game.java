@@ -170,6 +170,33 @@ public static String getPlayerName(int sensorId) {
 		return null;
 
 	}
+public static String getPlayerName(String sensorId) {
+	// int x = Integer.parseInt(sensorId);
+	String x = sensorId;
+	// if(x == 105 || x == 106 )
+	// {return "Refree";}
+	// else if (x == 4 || x == 8 || x == 10 || x == 12)
+	// { return "Ball"; }
+	//
+	for (int i = 0; i < teamA.players.size(); i++) {
+		if (teamA.players.get(i).hasSensorId(Integer.parseInt(x))) {
+			return teamA.players.get(i).name;
+		} else {
+			continue;
+		}
+
+	}
+	for (int i = 0; i < teamB.players.size(); i++) {
+		if (teamB.players.get(i).hasSensorId(Integer.parseInt(x))) {
+			return teamB.players.get(i).name;
+		} else {
+			continue;
+		}
+	}
+
+	return null;
+
+}
 
 	public static String getTeam(String playerName) {
 
