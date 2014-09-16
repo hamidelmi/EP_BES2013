@@ -17,7 +17,7 @@ public class NewPostionStatement {
 						+ "RawPos.abs_v as abs_v, RawPos.abs_a as abs_a, "
 						+ "eplab.anfragen.Game.getPlayerName(RawPos.sid) as playerName, " 
 						+ "eplab.anfragen.Game.StatusInField(RawPos.x,RawPos.y,RawPos.z) as PosInField"
-						+ " from PositionEvent RawPos ";
+						+ " from Event RawPos ";
     	
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);

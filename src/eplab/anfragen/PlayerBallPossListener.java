@@ -19,7 +19,7 @@ public class PlayerBallPossListener implements UpdateListener {
 			try {
 			    PrintWriter out = new PrintWriter(new BufferedWriter
 			    		(new FileWriter(eplab.anfragen.Settings.playersPossOutPath+theEvent
-			    				.get("palyerName").toString(), true)));
+			    				.get("playerName").toString(), true)));
 			    out.println(theEvent.getUnderlying());
 			    out.close();
 			} catch (IOException e) {

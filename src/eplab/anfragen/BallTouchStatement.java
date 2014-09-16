@@ -20,7 +20,7 @@ public class BallTouchStatement {
 						+ "from pattern [every ( BallEventA = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true "
 						+ "and Math.abs(abs_a)/ 1000000 > 55) -> "
 						+ " BallEventB = ValidPositionEvent( eplab.anfragen.Game.isBall(sid) = true and "
-						+ "BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
+						+ "BallEventA.sid = BallEventB.sid and BallEventB.abs_a < BallEventA.abs_a))]";
 		
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);

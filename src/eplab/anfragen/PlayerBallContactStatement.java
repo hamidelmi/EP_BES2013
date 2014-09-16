@@ -12,7 +12,7 @@ public class PlayerBallContactStatement {
 		String query = 	"on BallTouchEvent as ball "
 						+ "insert into PlayerBallContactEvent select  "
 						+ "win.x as player_x, win.y as player_y, win.z as player_z, "
-						+ "win.playerName as palyerName, win.PosInField as PosInField, "
+						+ "win.playerName as playerName, win.PosInField as PosInField, "
 						+ "win.vx as player_vx, win.vy as player_vy, win.vz as player_vz, "
 						+ "win.ts as player_ts,  "
 						+ "ball.ballId as ball_id, ball.ts as ball_ts, "

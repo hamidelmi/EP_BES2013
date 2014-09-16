@@ -11,10 +11,10 @@ public class PlayerBallPossStatement {
 	public PlayerBallPossStatement(EPAdministrator admin, UpdateListener listener) {
 		String query = "insert into PlayerBallPossEvent "
 						+ "select max(ts) as ts, "
-						+ "palyerName, "
+						+ "playerName, "
 						+ "sum(time) as time, "
 						+ "sum(hit) as hits "
-						+ "from BallPossIntervalEvent group by palyerName "
+						+ "from BallPossIntervalEvent group by playerName "
 						+ "output last every 1 events";
     	
 		this.statement = admin.createEPL(query);

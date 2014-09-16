@@ -13,24 +13,26 @@ public class TeamBallPossessionStatement {
 		String query =  "insert into TeamBallPossIntervalEvent " 
 						+ " select max(ts) as ts, teamId, "
 						+ " sum(time) as time"
-						+ " from BallPossIntervalEvent"
+						+ " from BallPossIntervalEvent.win:ext_timed(ts/1000000000, 5 minutes)"
 						+ " group by teamId"
-						+ " output last every 1 events";
+						+ " order by teamId, time ";
+//						+ " output last every 1 ";
 	    
 		this.epStatement1 = epAdministrator.createEPL(query);
 //		this.epStatement1.addListener(listener);
 		
 		query =  "insert into TeamBallPossEvent " 
-				+ " select max(EventA.ts) as ts, EventA.teamId as teamId, "
+				+ " select EventA.ts, EventA.teamId as teamId, "
 				+ " case  when EventA.teamId='teamA' then EventA.time"
 				+ "       	when EventB.teamId='teamA' then EventB.time end as timeA, "
 				+ " case  when EventA.teamId='teamB' then EventA.time"
 				+ "       	when EventB.teamId='teamB' then EventB.time end as timeB, "
 				+ " (EventA.time/(EventA.time + EventB.time))*100 as time_precent"
 				+ " from pattern [ every ( EventA = TeamBallPossIntervalEvent   -> "
-				+ " EventB = TeamBallPossIntervalEvent ( EventA.teamId != EventB.teamId))].win:ext_timed(EventA.ts, 5 min)";
+				+ " EventB = TeamBallPossIntervalEvent ( EventA.teamId != EventB.teamId))]";
 //				+ " group by EventA.teamId ";
 
+		
 		this.epStatement2 = epAdministrator.createEPL(query);
 		this.epStatement2.addListener(listener);
 		
