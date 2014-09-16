@@ -1,11 +1,5 @@
 package eplab.anfragen;
 
-/*
- * This class is used for initializing the project and the queries 
- * i.e. fetch and event from dataFileParser and create objects of all statements and 
- * feed the generated stream to the listeners and generate output
- * 
- */
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

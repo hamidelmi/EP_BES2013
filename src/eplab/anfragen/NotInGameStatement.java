@@ -8,10 +8,10 @@ public class NotInGameStatement {
 	private EPStatement epStatement;
 
 	public NotInGameStatement(EPAdministrator epAdministrator, UpdateListener listener) {
-		String query = "insert into NotInGameEvent select Pos.ts as ts"/*, Pos.entType as entType*/+" , current_timestamp() "
+		String query = "insert into NotInGameEvent select Pos.ts as ts , current_timestamp() "
 				+ "from PositionEvent Pos "
 				+ "where eplab.anfragen.Game.IsActiveGame(Pos.ts) = false "
-				+ "or ("/*Pos.entType = 2 and */+"Pos.PosInField = -1) ";
+				+ "or (Pos.getLocation = 3) ";
 
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);

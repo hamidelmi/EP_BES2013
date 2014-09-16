@@ -14,11 +14,11 @@ public class PositionStatement {
 				+ "select eventPosition.sid as sid, eventPosition.ts as ts, eventPosition.x as x, eventPosition.y as y, eventPosition.z as z, "
 				+ "eventPosition.vx as vx, eventPosition.vy as vy, eventPosition.vz as vz, eventPosition.ax as ax, eventPosition.ay as ay, eventPosition.az as az, "
 				+ "eventPosition.abs_v as abs_v, eventPosition.abs_a as abs_a, "
-				//+ "Entity.name as name, Entity.entityType as entType, "
-				+ "eplab.anfragen.Game.StatusInField(eventPosition.x,eventPosition.y,eventPosition.z) as PosInField "
-				//+ " , eplab.anfragen.Game.GetTimeInGame(eventPosition.ts) as timeInGame "
-				+ "from Event eventPosition"; // , method:eplab.anfragen.Game.GetEntityFromSensorIds(sid) Entity";
+				+ "eplab.anfragen.Game.GetPlayerName(sid) as playerName, "
+				+ "eplab.anfragen.Game.GetLocation(eventPosition.x,eventPosition.y,eventPosition.z) as getLocation "
+				+ "from Event eventPosition";
 
+		
 /*		String query = "select sid, ts, abs_v, " + "CASE WHEN abs_v < " + SpeedToV(1)
 				+ " THEN 0 " + "WHEN abs_v < " + SpeedToV(11) + " THEN 1"
 				+ "WHEN abs_v < " + SpeedToV(13) + " THEN 2" + "WHEN abs_v < "
@@ -27,7 +27,9 @@ public class PositionStatement {
 		this.epStatement = epAdministrator.createEPL(query);
 		this.epStatement.addListener(listener);
 	}
+	
 	private int SpeedToV(int speed) {
 		return (int) (speed * Math.pow(10, 6) / 3.6);
 	}
+	
 }

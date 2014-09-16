@@ -11,14 +11,14 @@ public class BallContactListener implements UpdateListener {
 		if (newEvents == null) {
 			return;
 		}
-		for (EventBean theEvent : newEvents) {
-//			if (theEvent.getUnderlying().toString().contains("shotongoal=1")) {
+//		for (EventBean theEvent : newEvents) {
+//			if (theEvent.getUnderlying().toString().contains("isTowardGoal=1")) {
 //				System.out
 //						.println("Ball contact event received at "
 //								+ theEvent.get("ts") + " : "
 //								+ theEvent.getUnderlying());
 //			}
-		}
+//		}
 	}
 
 	// private static final Log log =

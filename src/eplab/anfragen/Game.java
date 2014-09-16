@@ -21,7 +21,8 @@ import java.util.List;
 
 public class Game {
 	private static Game instance;
-	protected Team teamA, teamB;
+	protected static Team teamA;
+	protected static Team teamB;
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
@@ -44,6 +45,7 @@ public class Game {
 
 	protected Game() {
 		playersAccumulativeIntensity = new HashMap<String, AccumulativeIntensity>();
+		m_sensorIdsToEntities = new HashMap();
 		List<Player> players = new ArrayList<Player>();
 		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
@@ -53,7 +55,7 @@ public class Game {
 		players.add(new Player(23, 24, "Roman Hartleb"));
 		players.add(new Player(57, 58, "Erik Engelhardt"));
 		players.add(new Player(59, 28, "Sandro Schneider"));
-
+		
 		fillAccumulativeIntensity(players);
 		teamA = new Team(players);
 
@@ -98,7 +100,7 @@ public class Game {
 		return -1;
 	}
 
-	private int indexOfPlayer(int sensorId, Team team) {
+	private static int indexOfPlayer(int sensorId, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).hasSensorId(sensorId))
 				return i;
@@ -159,32 +161,31 @@ public class Game {
 			return Intensitiy.Sprint;
 	}
 
-	public static int StatusInField(long x, long y, long z) {
-//		if ((x < leftField) || (x > rightField) || (y > topField)
-//				|| (y < bottomField)) {
-//			return -1;
-//		}
+	public static int GetLocation(long x, long y, long z) {
 		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D)
 				&& (z < 2440.0D)) {
 			//System.out.println("1");
 			return 1;
 		}
-		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
+		else if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
 				&& (z < 2440.0D)) {
 			//System.out.println("2");
 			return 2;
 		}
-		return 0;
+//		else if ((x < leftField) || (x > rightField) || (y > topField)
+//				|| (y < bottomField)) {
+//			//System.out.println("3");
+//			return 3;//out of field
+//		}
+		else 
+			return 0;
 	}
 
-	public static long GetEuclideanDistance(int x1, int y1, int z1, int x2,
+	public static long GetDistance(int x1, int y1, int z1, int x2,
 			int y2, int z2) {
-		double a = Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
-				+ Math.pow(z2 - z1, 2.0D);
-
-		double d = Math.sqrt(a);
-
-		return (long) d;
+		double distance = Math.sqrt(Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
+				+ Math.pow(z2 - z1, 2.0D));
+		return (long) distance;
 	}
 
 	public static boolean IsActiveGame(long ts) {
@@ -284,17 +285,17 @@ public class Game {
 
 	}
 
-	public static int IsGoal(long ts, int x, int y, int z, int abs_v, int vx,
+	public static int IsTowardGoal(long ts, int x, int y, int z, int abs_v, int vx,
 			int vy, int vz) {
-		double interval = 1.5D;
-
+//		double interval = 1.5D;
+//
 //		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
 //				abs_v, vx, vy, vz);
-
-//		int iStatusInfield = StatusInField(nextCoordinate.x, nextCoordinate.y,
+//
+//		int iGetLocation = GetLocation(nextCoordinate.x, nextCoordinate.y,
 //				nextCoordinate.z);
-		int iStatusInfield = StatusInField(x, y,z);
-		if ((iStatusInfield == 1) || (iStatusInfield == 2)) {
+		int iGetLocation = GetLocation(x, y,z);
+		if ((iGetLocation == 1) || (iGetLocation == 2)) {
 			return 1;
 		}
 		return 0;
@@ -319,6 +320,30 @@ public class Game {
 		return new Coordinate(future_x, future_y, future_z);
 	}
 	
+	  protected static HashMap<String, SensoredEntity> m_sensorIdsToEntities = null;
+	public static SensoredEntity GetEntityFromSensorIds(String sid)
+	  {
+	    SensoredEntity curEntity = (SensoredEntity)m_sensorIdsToEntities.get(sid);
+	    
+	    return curEntity;
+	  }
 	
+	public static String GetPlayerName(int sensorId) {
+		int i = indexOfPlayer(sensorId, teamA);
+		if (i >= 0)
+		{
+			Player player = teamA.players.get(i);
+			return player.name;
+		}
+		else {
+			i = indexOfPlayer(sensorId, teamB);
+			if (i >= 0)
+			{
+				Player player = teamB.players.get(i);
+				return player.name;
+			}
+		}
+		return null;
+	}
 	
 }
