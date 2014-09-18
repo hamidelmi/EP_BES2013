@@ -15,8 +15,8 @@ public class BallContactStatement {
 				+ "BallEventA.abs_v as abs_v, (BallEventA.abs_a / 1000000) as abs_a, (BallEventB.abs_a / 1000000) as abs_b, "
 				+ "eplab.anfragen.Game.IsTowardGoal(BallEventA.ts, BallEventA.x, BallEventA.y,BallEventA.z, BallEventA.abs_v, "
 				+ "BallEventA.vx, BallEventA.vy,BallEventA.vz) as isTowardGoal "
-				+ "from pattern [every (BallEventA = RelevantPositionEvent( Math.abs(abs_a)/1000000 > 55)-> "
-				+ "BallEventB = RelevantPositionEvent(BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
+				+ "from pattern [every (BallEventA = PositionEvent( Math.abs(abs_a)/1000000 > 55)-> "
+				+ "BallEventB = PositionEvent(BallEventA.sid = sid and abs_a < BallEventA.abs_a))]";
 
 		this.epStatement = admin.createEPL(query);
 		this.epStatement.addListener(listener);

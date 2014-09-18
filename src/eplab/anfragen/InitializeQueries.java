@@ -37,9 +37,9 @@ public class InitializeQueries {
 		PlayerLocationStatement playerLocationStatement = new PlayerLocationStatement(
 				epServiceProvider.getEPAdministrator(),
 				new PlayerLocationListener());
-		RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
-				epServiceProvider.getEPAdministrator(),
-				new RelevantPositionListener());
+//		RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
+//				epServiceProvider.getEPAdministrator(),
+//				new RelevantPositionListener());
 		BallContactStatement ballContactStatement = new BallContactStatement(
 				epServiceProvider.getEPAdministrator(),
 				new BallContactListener());
