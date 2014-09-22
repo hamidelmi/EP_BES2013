@@ -10,7 +10,7 @@ public class BallPossIntervalListener implements UpdateListener {
 			return;
 		}
 		for (EventBean theEvent : newEvents) {
-//			System.out.println("Ball possession interval received :" + theEvent.getUnderlying());
+			//System.out.println("Ball possession interval received :" + theEvent.getUnderlying());
 		}
 	}
 }

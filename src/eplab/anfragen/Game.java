@@ -5,28 +5,31 @@ package eplab.anfragen;
  * Also it holds all the utility functions needed in all queries 
  * 
  */
-import eplab.bodenobjekte.*;
 
+import eplab.anfragen.GameInterval;
+import eplab.anfragen.Settings;
+import eplab.bodenobjekte.*;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 
 public class Game {
 	private static Game instance;
-	protected static Team teamA;
-	protected static Team teamB;
+	protected static Team teamA, teamB;
 	protected Referee referee;
 	protected Ball ball;
 	private HashMap<String, AccumulativeIntensity> playersAccumulativeIntensity;
-
+	protected static GameInterval oGameInterval = new GameInterval();
 	protected static int bottomField = -33960;
 	protected static int leftField = 0;
 	protected static int topField = 33960;
@@ -35,12 +38,9 @@ public class Game {
 	protected static long tsEndFirstHalf = Long.parseLong("12557295594424116");
 	protected static long tsStartSecondHalf = Long.parseLong("13086639146403495");
 	protected static long tsEndSecondHalf = Long.parseLong("14879639146403495");
-
-
 	protected static ArrayList<Double> beginTS = new ArrayList<Double>();
-	protected static ArrayList<Double> endTS = new ArrayList<Double>();
-	protected static GameIntervals oGameIntervals = new GameIntervals();
-	protected static int initTsArray = 0;
+ 	protected static ArrayList<Double> endTS = new ArrayList<Double>();
+ 	protected static int initTsArray = 0;
 
 	public static Game Singleton() {
 		if (instance == null)
@@ -50,7 +50,6 @@ public class Game {
 
 	protected Game() {
 		playersAccumulativeIntensity = new HashMap<String, AccumulativeIntensity>();
-		m_sensorIdsToEntities = new HashMap();
 		List<Player> players = new ArrayList<Player>();
 		players.add(new GoalKeeper(13, 14, 97, 98, "Nick Gertje"));
 		players.add(new Player(47, 16, "Dennis Dotterweich"));
@@ -60,7 +59,7 @@ public class Game {
 		players.add(new Player(23, 24, "Roman Hartleb"));
 		players.add(new Player(57, 58, "Erik Engelhardt"));
 		players.add(new Player(59, 28, "Sandro Schneider"));
-		
+
 		fillAccumulativeIntensity(players);
 		teamA = new Team(players);
 
@@ -105,7 +104,7 @@ public class Game {
 		return -1;
 	}
 
-	private static int indexOfPlayer(int sensorId, Team team) {
+	private int indexOfPlayer(int sensorId, Team team) {
 		for (int i = 0; i < team.players.size(); i++)
 			if (team.players.get(i).hasSensorId(sensorId))
 				return i;
@@ -144,7 +143,56 @@ public class Game {
 		}
 		return null;
 	}
+	
 
+
+public static String getPlayerName(String sensorId) {
+	// int x = Integer.parseInt(sensorId);
+	String x = sensorId;
+	// if(x == 105 || x == 106 )
+	// {return "Refree";}
+	// else if (x == 4 || x == 8 || x == 10 || x == 12)
+	// { return "Ball"; }
+	//
+	for (int i = 0; i < teamA.players.size(); i++) {
+		if (teamA.players.get(i).hasSensorId(Integer.parseInt(x))) {
+			return teamA.players.get(i).name;
+		} else {
+			continue;
+		}
+
+	}
+	for (int i = 0; i < teamB.players.size(); i++) {
+		if (teamB.players.get(i).hasSensorId(Integer.parseInt(x))) {
+			return teamB.players.get(i).name;
+		} else {
+			continue;
+		}
+	}
+
+	return null;
+
+}
+
+	public static String getTeam(String playerName) {
+
+		for (int i = 0; i < teamB.players.size(); i++) {
+			if (teamB.players.get(i).getName().equals(playerName)) {
+				return "teamB";
+			} else {
+				continue;
+			}
+		}
+		for (int i = 0; i < teamA.players.size(); i++) {
+			if (teamA.players.get(i).getName().equals(playerName)) {
+				return "teamA";
+			} else {
+				continue;
+			}
+		}
+
+		return null;
+	}
 	public static double calculateSpeed(double v) {
 		return v * 3600D * Math.pow(10, -9);
 	}
@@ -165,94 +213,97 @@ public class Game {
 		else
 			return Intensitiy.Sprint;
 	}
-
-	public static int GetLocation(long x, long y, long z) {
-		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D)
-				&& (z < 2440.0D)) {
+	
+	
+	public static int StatusInField(long x, long y, long z)
+	{
+		if ((x > 22578.5D) && (x < 29898.5D) && (y >= 33941.0D) && (z < 2440.0D)) {
 			//System.out.println("1");
 			return 1;
 		}
-		else if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D)
-				&& (z < 2440.0D)) {
+		if ((x > 22560.0D) && (x < 29880.0D) && (y <= -33968.0D) && (z < 2440.0D)) {
 			//System.out.println("2");
 			return 2;
 		}
-//		else if ((x < leftField) || (x > rightField) || (y > topField)
-//				|| (y < bottomField)) {
-//			//System.out.println("3");
-//			return 3;//out of field
-//		}
-		else 
-			return 0;
+		if ((x < leftField) || (x > rightField) || (y > topField) || (y < bottomField)) {
+			return -1;
+		}
+		return 0;
 	}
-
-	public static long GetDistance(int x1, int y1, int z1, int x2,
+	public static long GetEuclideanDistance(int x1, int y1, int z1, int x2,
 			int y2, int z2) {
-		double distance = Math.sqrt(Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
-				+ Math.pow(z2 - z1, 2.0D));
-		return (long) distance;
-	}
+		double a = Math.pow(x2 - x1, 2.0D) + Math.pow(y2 - y1, 2.0D)
+				+ Math.pow(z2 - z1, 2.0D);
 
-	public static boolean IsActiveGame(long ts) {
-		return oGameIntervals.isActiveInterval(ElapsedSecondsFromStart(ts));
+		double d = Math.sqrt(a);
+
+		return (long) d;
 	}
 	
-	  public static double ElapsedSecondsFromStart(long ts)
+	public static int getGameHalf(long ts) {
+		if (ts < tsStartFirstHalf)
+			return 0;
+		else if (ts >= tsStartFirstHalf && ts <= tsEndFirstHalf)
+			return 1;
+		else if (ts >= tsStartSecondHalf && ts <= tsEndSecondHalf)
+			return 2;
+		else if (Objects.toString(ts, null).matches("12398.*"))
+			return 0;
+
+		return 0;
+	}
+	
+	 public static int IsTowardGoal(long ts, int x, int y, int z, int abs_v, int vx, int vy, int vz)
 	  {
-	    int gameHalf = CurrentGameHalf(ts);
-	    if (gameHalf == 1) {
-	    	//System.out.println(ElapsedSeconds(tsGameStartFrst, ts).doubleValue());
-	      return ElapsedSeconds(tsGameStartFrst, ts).doubleValue();
-	    }
-	    if (gameHalf == 2) {
-	      return ElapsedSeconds(tsGameStartSnd, ts).doubleValue();
-	    }
-	    return 0.0D;
-	  }
-	  
-	  public static Double ElapsedSeconds(long tsStart, long tsEnd)
-	  {
-	    double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
+	    double interval = 1.5D;
 	    
-	    return new Double(seconds);
-	  }
-	  
-	  protected static long tsGameStartFrst = Long.parseLong("10753295594424116");
-	  protected static long tsGameEndFrst = Long.parseLong("12557295594424116");
-	  protected static long tsGameStartSnd = Long.parseLong("13086639146403495");
-	  protected static long tsGameEndSnd = Long.parseLong("14879639146403495");
-	  
-	  public static int CurrentGameHalf(long ts)
-	  {
-	    if ((ts >= tsGameStartFrst) && (ts <= tsGameEndFrst)) {
+	    Location LocationInfuture = GetPositionInInterval(interval, x, y, z, abs_v, vx, vy, vz);
+	    
+	    int iStatusInfield = StatusInField(LocationInfuture.x, LocationInfuture.y, LocationInfuture.z);
+	    if ((iStatusInfield == 1) || (iStatusInfield == 2)) {
 	      return 1;
 	    }
-	    if ((ts >= tsGameStartSnd) && (ts <= tsGameEndSnd)) {
-	      return 2;
-	    }
-	    return -1;
+	    return 0;
+	  }
+	 
+	 protected static Location GetPositionInInterval(double interval, int cur_x, int cur_y, int cur_z, int cur_abs_v, int cur_vx, int cur_vy, int cur_vz)
+	  {
+	    long next_x = 0L;
+	    long next_y = 0L;
+	    long next_z = 0L;
+
+	    //x > 22560.0 and x < 29880.0 OR x > 22578.5 and x < 29898.5
+	    next_x = (long)(cur_x + (double)cur_abs_v * (double)cur_vx * Math.pow(10.0D, -7.0D) * interval);
+	    //y = 33941.0 OR y = -33968.0
+	    next_y = (long)(cur_y + (double)cur_abs_v * (double)cur_vy * Math.pow(10.0D, -7.0D) * interval);
+	    //z < 2440.0
+	    next_z =(long)(9810.0D * Math.pow(interval, -2.0D) / 2.0D + (double)cur_vz * interval + cur_z);
+
+	    //return new Location(cur_x, cur_y, cur_z);
+	    return new Location(next_x, next_y, next_z);
 	  }
 
-	public static boolean isValidInterval(Double ts) throws IOException {
+	public static boolean isValidInterval(double ts) throws IOException {
 
 		int y;
+		long gameHalf = 0;
+		;
 		if (initTsArray == 0) {
 			BufferedReader br = new BufferedReader(new FileReader(
 					Settings.matchIntervalFilePath));
 			String[] splitLine = null;
 			String splitString = null;
-			int gameHalf = 0;
-			int event_id = 0;
+
 			while ((splitString = br.readLine()) != null) {
 				splitLine = splitString.toString().split(";");
 				if (splitLine[0].startsWith("20")) {
-					gameHalf = 1;
+					gameHalf = tsStartFirstHalf;
 				} else
-					gameHalf = 2;
-				if (splitLine[2].split(" ")[2].equals("Begin")) {
-					beginTS.add(convertStringtoMilliSec(splitLine[2]));
+					gameHalf = tsStartSecondHalf;
+				if (splitLine[1].split(" ")[2].equals("Begin")) {
+					beginTS.add(convertStringtoMilliSec(splitLine[2], gameHalf));
 				} else {
-					endTS.add(convertStringtoMilliSec(splitLine[2]));
+					endTS.add(convertStringtoMilliSec(splitLine[2], gameHalf));
 				}
 			}
 			br.close();
@@ -260,95 +311,105 @@ public class Game {
 		}
 
 		for (Double s : beginTS) {
-			if (ts.compareTo(s) <= 0) {
-				y = beginTS.indexOf(s - 1);
-				if (ts.compareTo(endTS.get(y)) <= 0) {
+			Double db = new Double(ts);
+			db = db * Math.pow(10.0D, -12.0D);
+			if (db.compareTo(s) <= 0) {
+				y = beginTS.indexOf(s) - 1;
+				if (db.compareTo(endTS.get(y)) <= 0) {
 					return true;
-				}
+				} else
+					return false;
 			}
-
 		}
 		return false;
+
 	}
 
-	public static double convertStringtoMilliSec(String currTime) {
+	public static double convertStringtoMilliSec(String currTime, long gameHalf) {
 		String sTimeStampFormat = "hh:mm:ss.SSS";
 		SimpleDateFormat intervalTimeFormat = new SimpleDateFormat(
 				sTimeStampFormat);
 		Calendar baseCal = new GregorianCalendar();
+
 		try {
 			baseCal.setTime(intervalTimeFormat.parse("00:00:00.000"));
 			Date parsedDate = intervalTimeFormat.parse(currTime);
 			Calendar tmpCal = new GregorianCalendar();
 			tmpCal.setTime(parsedDate);
 
-			return tmpCal.getTimeInMillis() - baseCal.getTimeInMillis();
+			// double x = tmpCal.getTimeInMillis();
+			// double y = baseCal.getTimeInMillis();
+
+			return (parsedDate.getTime() - baseCal.getTimeInMillis())
+					* Math.pow(10D, -3.0D) + gameHalf * Math.pow(10D, -12D);
+
 		} catch (Exception e) {
-			System.out.println("error converting ts to pico seconds");
-			return 1800000L;
+			// System.out.println("error converting ts to pico seconds");
+			return 0L;
 		}
 
 	}
 
-	public static int IsTowardGoal(long ts, int x, int y, int z, int abs_v, int vx,
-			int vy, int vz) {
-//		double interval = 1.5D;
-//
-//		Coordinate nextCoordinate = GetPositionInInterval(interval, x, y, z,
-//				abs_v, vx, vy, vz);
-//
-//		int iGetLocation = GetLocation(nextCoordinate.x, nextCoordinate.y,
-//				nextCoordinate.z);
-		int iGetLocation = GetLocation(x, y,z);
-		if ((iGetLocation == 1) || (iGetLocation == 2)) {
-			return 1;
+	public static boolean isBall(int sensorId) {
+		int[] ballSid = new int[] { 4, 8, 10, 12 };
+		for (int x = 0; x < ballSid.length; x++) {
+			if (ballSid[x] == sensorId)
+				return true;
 		}
-		return 0;
-	}
+		// if (Arrays.asList(ballSid).contains(Integer.parseInt(sensorId)))
+		// return true;
+		// else
+		// return false;
 
-	protected static Coordinate GetPositionInInterval(double interval,
-			int cur_x, int cur_y, int cur_z, int cur_abs_v, int cur_vx,
-			int cur_vy, int cur_vz) {
-		long future_x = 0L;
-		long future_y = 0L;
-		long future_z = 0L;
-
-		future_x = (long) (cur_x + cur_abs_v * cur_vx * Math.pow(10.0D, -3.0D)
-				* interval);
-
-		future_y = (long) (cur_y + cur_abs_v * cur_vy * Math.pow(10.0D, -3.0D)
-				* interval);
-
-		future_z = (long) (9810.0D * Math.pow(interval, 2.0D) / 2.0D + cur_vz
-				* interval + cur_z);
-
-		return new Coordinate(future_x, future_y, future_z);
+		return false;
 	}
 	
-	  protected static HashMap<String, SensoredEntity> m_sensorIdsToEntities = null;
-	public static SensoredEntity GetEntityFromSensorIds(String sid)
+	public static double GetTimeInGame(long ts)
+	{
+		if (!oGameInterval.ParseGameInterruptionsFile(Settings.sPathToInterruptionPath))
+	    {
+	      System.out.println("Error in ParseGameInterruptionsFile(sPathToInterruptionPath)");
+	      System.exit(0);
+	    }
+		//oGameInterval.printGameInterruption();
+		double currts = ElapsedSecondsFromStart(ts);
+		double x = oGameInterval.getCurrGameTime(currts);
+		return x;
+	}
+	
+	public static double ElapsedSecondsFromStart(long ts)
+	{
+		int gameHalf = CurrentGameHalf(ts);
+	    if (gameHalf == 1) {
+	      return ElapsedSeconds(tsStartFirstHalf, ts).doubleValue();
+	    }
+	    if (gameHalf == 2) {
+	    return ElapsedSeconds(tsStartSecondHalf, ts).doubleValue();
+	    }
+	    	return 0.0D;
+	}
+	
+	public static int CurrentGameHalf(long ts)
+	{
+	  if ((ts >= tsStartFirstHalf) && (ts <= tsEndFirstHalf)) {
+	    return 1;
+	  }
+	  if ((ts >= tsStartSecondHalf) && (ts <= tsEndSecondHalf)) {
+	    return 2;
+	  }
+	  return -1;
+	}
+	
+	 protected static GameIntervals gameIntervals = new GameIntervals();
+	 public static boolean IsActiveGame(long ts)
 	  {
-	    SensoredEntity curEntity = (SensoredEntity)m_sensorIdsToEntities.get(sid);
-	    
-	    return curEntity;
+	    return gameIntervals.isActiveInterval(ElapsedSecondsFromStart(ts));
 	  }
 	
-	public static String GetPlayerName(int sensorId) {
-		int i = indexOfPlayer(sensorId, teamA);
-		if (i >= 0)
-		{
-			Player player = teamA.players.get(i);
-			return player.name;
-		}
-		else {
-			i = indexOfPlayer(sensorId, teamB);
-			if (i >= 0)
-			{
-				Player player = teamB.players.get(i);
-				return player.name;
-			}
-		}
-		return null;
+	public static Double ElapsedSeconds(long tsStart, long tsEnd)
+	{
+	  double seconds = (tsEnd - tsStart) * Math.pow(10.0D, -12.0D);
+	  return new Double(seconds);
 	}
 	
 	public static int GetFiledWidth()
@@ -360,5 +421,4 @@ public class Game {
 	{
 		return topField - bottomField;
 	}
-	
 }

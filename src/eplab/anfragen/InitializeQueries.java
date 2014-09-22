@@ -32,29 +32,40 @@ public class InitializeQueries {
 		// new ValidBallPostionStatement(epService.getEPAdministrator(),
 		// new ValidBallPostionListener());
 
-		PositionStatement positionStatement = new PositionStatement(
-				epServiceProvider.getEPAdministrator(), new PositionListener());
-		PlayerLocationStatement playerLocationStatement = new PlayerLocationStatement(
-				epServiceProvider.getEPAdministrator(),
-				new PlayerLocationListener());
-//		RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
+//		PositionStatement positionStatement = new PositionStatement(
+//				epServiceProvider.getEPAdministrator(), new PositionListener());
+//		PlayerLocationStatement playerLocationStatement = new PlayerLocationStatement(
 //				epServiceProvider.getEPAdministrator(),
-//				new RelevantPositionListener());
-		BallContactStatement ballContactStatement = new BallContactStatement(
-				epServiceProvider.getEPAdministrator(),
-				new BallContactListener());
-		ContactStatement contactStatement = new ContactStatement(
-				epServiceProvider.getEPAdministrator(), new ContactListener());
-		PauseIntervalStatement pauseIntervalStatement = new PauseIntervalStatement(
-				epServiceProvider.getEPAdministrator(),
-				new PauseIntervalListener());
-		NotInGameStatement notInGameStatement = new NotInGameStatement(
-				epServiceProvider.getEPAdministrator(), new NotInGameListener());
-		// BallPossessionStatement ballPossessionStatement = new
-		// BallPossessionStatement(epServiceProvider.getEPAdministrator(), new
-		// BallPossessionListener());
-		GoalStatement goalStatement = new GoalStatement(
-				epServiceProvider.getEPAdministrator(), new GoalListener());
+//				new PlayerLocationListener());
+////		RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(
+////				epServiceProvider.getEPAdministrator(),
+////				new RelevantPositionListener());
+//		BallContactStatement ballContactStatement = new BallContactStatement(
+//				epServiceProvider.getEPAdministrator(),
+//				new BallContactListener());
+//		ContactStatement contactStatement = new ContactStatement(
+//				epServiceProvider.getEPAdministrator(), new ContactListener());
+//		PauseIntervalStatement pauseIntervalStatement = new PauseIntervalStatement(
+//				epServiceProvider.getEPAdministrator(),
+//				new PauseIntervalListener());
+//		NotInGameStatement notInGameStatement = new NotInGameStatement(
+//				epServiceProvider.getEPAdministrator(), new NotInGameListener());
+//		// BallPossessionStatement ballPossessionStatement = new
+//		// BallPossessionStatement(epServiceProvider.getEPAdministrator(), new
+//		// BallPossessionListener());
+//		GoalStatement goalStatement = new GoalStatement(
+//				epServiceProvider.getEPAdministrator(), new GoalListener());
+		
+		NewPostionStatement np=new NewPostionStatement(epServiceProvider.getEPAdministrator(), new NewPostionListener());
+		PlayerWindowStatement pbc=new PlayerWindowStatement(epServiceProvider.getEPAdministrator());
+		ValidPostionStatement vp=new ValidPostionStatement(epServiceProvider.getEPAdministrator(), new ValidPostionListener());
+		BallTouchStatement bt=new BallTouchStatement(epServiceProvider.getEPAdministrator(), new BallTouchListener());
+		PlayerBallContactStatement bc=new PlayerBallContactStatement(epServiceProvider.getEPAdministrator(), new PlayerBallContactListener());
+		OutOfPlayStatement op=new OutOfPlayStatement(epServiceProvider.getEPAdministrator(), new OutOfPlayListener());
+		BallPossIntervalStatement bs=new BallPossIntervalStatement(epServiceProvider.getEPAdministrator(), new BallPossIntervalListener());
+		RelevantPositionStatement relevantPositionStatement = new RelevantPositionStatement(epServiceProvider.getEPAdministrator(),new RelevantPositionListener());
+		GoalStatement goalStatement = new GoalStatement(epServiceProvider.getEPAdministrator(), new GoalListener());
+		
 
 		DataFileParser dataFileParser = new DataFileParser();
 		Event currentEvent = dataFileParser.createNewEvent();
